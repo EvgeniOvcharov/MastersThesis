@@ -1,12 +1,13 @@
 ---
 title: "Models for Football Data"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
     code_folding: hide
 ---
 # Data Processing
-We load football data from a Kaggle containing Spanish League results, for the 2016-17 and 2017-18 seasons.
+We load football data from a Kaggle containing Spanish League results(https://www.kaggle.com/datasets/ricardomoya/football-matches-of-spanish-league), for the 2016-17 and 2017-18 seasons.
 
 ```{r message=FALSE, warning=FALSE}
 library("dplyr")
@@ -15,7 +16,9 @@ library("ggplot2")
 library("reshape2")
 library("nloptr")
 library("data.table")
-data <- read.csv("FMEL_Dataset.csv") 
+
+data <- read.csv("https://raw.githubusercontent.com/plamenapp/MastersThesis/master/FMEL_Dataset.csv")
+ 
 
 data <- data %>%
   filter(season == "2016-17" | season == "2017-18" )
@@ -345,7 +348,7 @@ The likelihood function of the model is given by
 $$
 L(\alpha_i,\beta_i,\gamma,\rho,i = 1,2,...,n) = \prod_{k=1}^{N} \tau_{\lambda_k},_{\mu_k}(x,y)e^{-\lambda_k}\lambda_k^{x_k} e^{-\mu_k}\mu_k^{x_k} 
 $$
-In what follows we apply the same constraint optimization algorithm as before but ingluding the new parameter rho.
+In what follows we apply the same constraint optimization algorithm as before but including the new parameter rho.
 
 ```{r message=FALSE, warning=FALSE}
 f_lambda = function(alfa, beta, gama){
@@ -407,8 +410,8 @@ Ranking the teams based on the newly calculated attack and defense parameters (r
 ```{r}
 home_adv <- S_DC$par[2*n+1]
 rho_par <- S_DC$par[2*n+2]
-alpha <- S$par[1:n]
-beta <- S$par[(n+1):(2*n)]
+alpha <- S_DC$par[1:n]
+beta <- S_DC$par[(n+1):(2*n)]
 teams$alpha <- alpha
 teams$beta <- beta
 game_statistics_mod2 <- left_join(game_statistics,teams, by = c("team"))
@@ -446,4 +449,125 @@ head(data_combined[,c("localTeam", "visitorTeam", "localGoals", "visitorGoals","
 ```
 
 
+# Linear representation of the Dixon-Coles model 
+Previously we defined the following parameters:
+where
 
+$$
+\lambda = \alpha_i\beta_j\gamma
+$$
+
+$$
+\mu = \alpha_j\beta_i
+$$
+
+$$
+\tau_\lambda,_\mu(x,y) = \begin{cases}
+            1-\lambda\mu\rho \qquad \qquad\ \text{if } x=y=0\\
+            1+\lambda\rho     \qquad\qquad \text{if } x=0, y=1\\
+            1+\mu\rho         \quad \quad\quad\ \ \ \ \text{if } x=1, y=0\\
+            1-\rho            \qquad \quad \quad\quad\ \ \text{if } x=y=1\\
+            1                  \qquad \qquad \qquad \qquad \ \text{otherwise}
+            \end{cases}
+$$
+Where $\alpha$ is an estimate of each team's attack rating, $\beta_j$ is each teams defense parameter and $\gamma$ is the "home advantage". $\tau$ was introduced as a way to capture the correlation between the score of the two playing teams. 
+
+We can reshape the above as follows:
+
+$$
+ln(\lambda) = \alpha_i+\beta_j+\gamma
+$$
+
+$$
+ln(\mu) = \alpha_j + \beta_i
+$$
+
+$$
+ln(\tau_\lambda,_\mu(x,y)) = \begin{cases}
+            -ln(\lambda)-ln(\mu)-ln(\rho) \qquad \qquad\ \text{if } x=y=0\\
+            ln(\lambda) + ln(\rho)     \qquad\qquad \text{if } x=0, y=1\\
+            ln(\mu) + ln(\rho0         \quad \quad\quad\ \ \ \ \text{if } x=1, y=0\\
+            -ln(\rho)            \qquad \quad \quad\quad\ \ \text{if } x=y=1\\
+            0                  \qquad \qquad \qquad \qquad \ \text{otherwise}
+            \end{cases}
+$$
+Where $\lambda$, $\beta$, $\gamma$ are the log-values of the versions of the previously defined parameters.
+
+In what follows we apply the same constraint optimization algorithm as before to the same likelihood function but using the redefined parameters. The previously used constraint is now transformed to:
+
+$$
+\sum_{i=1}^n\alpha_i=0
+$$
+Applying the algorithm.
+
+```{r message=FALSE, warning=FALSE}
+f_lambda = function(alfa, beta, gama){
+  gama + alfa[x$local_team_index] + beta[x$visitor_team_index] 
+}
+
+f_mu = function(alfa, beta, gama){
+  alfa[x$local_team_index]+beta[x$visitor_team_index]
+}
+
+tau<- rep(0,nrow(x))
+
+f_tau = function(lambda, mu, rho){
+  for(i in 1:nrow(x)){
+  if (x$localGoals[i]== 0 && x$visitorGoals[i] == 0) {
+      tau[i] = -lambda[i]-mu[i]-log(rho)
+    } else if (x$localGoals[i]== 0 && x$visitorGoals[i] == 1) {
+      tau[i] = lambda[i]+log(rho)
+    } else if (x$localGoals[i]== 1 && x$visitorGoals[i] == 0) {
+      tau[i] = mu[i]+log(rho)
+    } else if (x$localGoals[i] == 1 && x$visitorGoals[i] == 1) {
+      tau[i] = -log(rho)
+    } else {tau[i] = 0}
+  }
+  return(tau)}
+
+
+f_l = function(w) {
+  alfa = w[1:n] 
+  beta = w[(n+1):(2*n)]
+  gama = w[2*n+1]
+  rho = w[2*n+2]
+  lambda = f_lambda(alfa, beta, gama)
+  mu = f_mu(alfa, beta, gama)
+  tau = f_tau(lambda, mu, rho)
+  
+  - sum(x$localGoals * lambda + x$visitorGoals * mu - exp(lambda) - exp(mu) + tau) 
+}
+
+eq = function(w) {
+  alfa = w[1:n]
+  c(sum(alfa))
+}
+
+w0 = c(rep(0, 2*n+1),1)
+options(warn = -1)
+
+suppressMessages(
+S_DC2 <- slsqp(w0, fn = f_l,
+           heq = eq,
+           control = list(xtol_rel = 1e-9, print_level = 0, maxeval = 1000)
+            )
+)
+S_DC2
+```
+We rank teams based on their overall ability $\alpha_i + \beta_i$ of attack and defence, represented on the multiplicative scale as $e^{\alpha_i + \beta_i}$ .
+
+```{r}
+home_adv <- S_DC2$par[2*n+1]
+rho_par <- S_DC2$par[2*n+2]
+alpha <- S_DC2$par[1:n]
+beta <- S_DC2$par[(n+1):(2*n)]
+teams$attack <- alpha
+teams$defence <- beta
+#teams <- select(teams,-alpha,-beta)
+game_statistics_mod3 <- left_join(game_statistics,teams, by = c("team"))
+game_statistics_mod3 <- game_statistics_mod3 %>%
+  mutate(skill = exp(attack+defence)) %>%
+  arrange(desc(skill))
+head(game_statistics_mod3)
+```
+Four of the top six teams are actually among the weakest teams in the league. 
