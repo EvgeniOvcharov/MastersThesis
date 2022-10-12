@@ -1,10 +1,10 @@
 ---
 title: "Models for Football Data"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
     code_folding: hide
+  pdf_document: default
 ---
 # Data Processing
 We load football data from a Kaggle containing Spanish League results(https://www.kaggle.com/datasets/ricardomoya/football-matches-of-spanish-league), for the 2016-17 and 2017-18 seasons.
@@ -571,3 +571,234 @@ game_statistics_mod3 <- game_statistics_mod3 %>%
 head(game_statistics_mod3)
 ```
 Four of the top six teams are actually among the weakest teams in the league. 
+
+## Maher's iterative approach
+
+Implemetnitng Maher's original model with four parameters.
+
+Calculating alpha and beta based on "home scores". Results after first itteration.
+
+```{r}
+x_balanced <- x %>%
+  group_by(local_team_index,visitor_team_index) %>%
+  summarise(localGoals = mean(localGoals),
+        visitorGoals = mean(visitorGoals))
+Sx <- sum(x_balanced$localGoals)
+local <- x_balanced %>%
+  group_by(local_team_index) %>%
+  summarise(localGoals_local = sum(localGoals),
+            alpha_0 = sum(localGoals)/sqrt(Sx))
+visitor <- x_balanced %>%
+  group_by(visitor_team_index) %>%
+  summarise(localGoals_visitor = sum(localGoals),
+            beta_0 = sum(localGoals)/sqrt(Sx))
+
+it_data <- left_join(local, visitor, by = c("local_team_index" = "visitor_team_index"))
+
+for (i in 1:nrow(it_data)){
+  it_data$beta_0[i] <- it_data$localGoals_visitor[i]/(sum(it_data$alpha_0)- it_data$alpha_0[i])
+}
+
+for (i in 1:nrow(it_data)){
+  it_data$alpha_0[i] <- it_data$localGoals_local[i]/(sum(it_data$beta_0)- it_data$beta_0[i])
+}
+
+head(it_data)
+```
+
+Results after second itteration.
+```{r}
+for (i in 1:nrow(it_data)){
+  it_data$beta_0[i] <- it_data$localGoals_visitor[i]/(sum(it_data$alpha_0)- it_data$alpha_0[i])
+}
+
+for (i in 1:nrow(it_data)){
+  it_data$alpha_0[i] <- it_data$localGoals_local[i]/(sum(it_data$beta_0)- it_data$beta_0[i])
+}
+head(it_data)
+```
+
+Results after the third iteration are the same as after the second one so these are our true values for $\alpha$ - attack streanght when playing at home and $\beta$ - weakness of defense when playing away.
+```{r}
+for (i in 1:nrow(it_data)){
+  it_data$beta_0[i] <- it_data$localGoals_visitor[i]/(sum(it_data$alpha_0)- it_data$alpha_0[i])
+}
+
+for (i in 1:nrow(it_data)){
+  it_data$alpha_0[i] <- it_data$localGoals_local[i]/(sum(it_data$beta_0)- it_data$beta_0[i])
+}
+head(it_data)
+```
+
+Ranking teams based on $\alpha$ + $\beta$
+```{r}
+alpha <- it_data$alpha_0
+beta <- it_data$beta_0
+teams$attack <- alpha
+teams$defence <- beta
+#teams <- select(teams,-alpha,-beta)
+game_statistics_mod4 <- left_join(game_statistics,teams, by = c("team"))
+game_statistics_mod4 <- game_statistics_mod4 %>%
+  mutate(skill = attack*(1/defence)) %>%
+  arrange(desc(skill))
+head(game_statistics_mod4)
+```
+
+
+
+
+We repeat the same calculations for gamma and delta  based on "visitor scores". Results after the first iteration: 
+
+```{r}
+x_balanced <- x %>%
+  group_by(local_team_index,visitor_team_index) %>%
+  summarise(localGoals = mean(localGoals),
+        visitorGoals = mean(visitorGoals))
+Sy <- sum(x_balanced$visitorGoals)
+local <- x_balanced %>%
+  group_by(local_team_index) %>%
+  summarise(visitorGoals_local = sum(visitorGoals),
+            gamma_0 = sum(visitorGoals)/sqrt(Sy))
+visitor <- x_balanced %>%
+  group_by(visitor_team_index) %>%
+  summarise(visitorGoals_visitor = sum(visitorGoals),
+            delta_0 = sum(visitorGoals)/sqrt(Sy))
+
+it_data2 <- left_join(local, visitor, by = c("local_team_index" = "visitor_team_index"))
+
+for (i in 1:nrow(it_data2)){
+  it_data2$delta_0[i] <- it_data2$visitorGoals_visitor[i]/(sum(it_data2$gamma_0)- it_data2$gamma_0[i])
+}
+
+for (i in 1:nrow(it_data2)){
+  it_data2$gamma_0[i] <- it_data2$visitorGoals_local[i]/(sum(it_data2$delta_0)- it_data2$delta_0[i])
+}
+
+head(it_data2)
+
+```
+
+Results after second iteration.
+
+```{r}
+
+for (i in 1:nrow(it_data2)){
+  it_data2$delta_0[i] <- it_data2$visitorGoals_visitor[i]/(sum(it_data2$gamma_0)- it_data2$gamma_0[i])
+}
+
+for (i in 1:nrow(it_data2)){
+  it_data2$gamma_0[i] <- it_data2$visitorGoals_local[i]/(sum(it_data2$delta_0)- it_data2$delta_0[i])
+}
+
+head(it_data2)
+```
+
+Again the results after the third iteration are the same as after the second one so these are our true values for \delta - attack streanght when playing at away and \gamma - weakness of defense when playing at home.
+
+```{r}
+for (i in 1:nrow(it_data2)){
+  it_data2$delta_0[i] <- it_data2$visitorGoals_visitor[i]/(sum(it_data2$gamma_0)- it_data2$gamma_0[i])
+}
+
+for (i in 1:nrow(it_data2)){
+  it_data2$gamma_0[i] <- it_data2$visitorGoals_local[i]/(sum(it_data2$delta_0)- it_data2$delta_0[i])
+}
+
+head(it_data2)
+```
+
+Ranking teams based on \gamma + \delta
+```{r}
+gamma <- it_data2$gamma_0
+delta <- it_data2$delta_0
+teams$attack <- delta
+teams$defence <- gamma
+#teams <- select(teams,-alpha,-beta)
+game_statistics_mod4 <- left_join(game_statistics,teams, by = c("team"))
+game_statistics_mod4 <- game_statistics_mod4 %>%
+  mutate(skill = exp(attack*(1/defence))) %>%
+  arrange(desc(skill))
+head(game_statistics_mod4)
+
+```
+
+Comparing the actual games outcomes with the ones predicted by the model
+```{r}
+verify_model <- left_join(it_data,it_data2, by = "local_team_index")
+verify_model <- verify_model[,c(1,3,5,7,9)]
+verify_model <- verify_model %>%
+  rename(team_index = local_team_index)
+x_updated <- left_join(x,verify_model[,c("team_index","alpha_0","gamma_0")], by = c("local_team_index" = "team_index"))
+x_updated <- left_join(x_updated,verify_model[,c("team_index","beta_0","delta_0")], by = c("visitor_team_index" = "team_index"))
+x_updated <- x_updated %>%
+  mutate( x_score_pred = round(alpha_0*beta_0,0),
+          y_score_pred = round(delta_0*gamma_0,0))
+
+head(x_updated)
+```
+
+Ranking teams based on the predicted games outcomes.
+```{r}
+melt_results2 <- function(results_df) {
+  results_df %>%
+    # select only relevant columns
+    select(local_team_index, visitor_team_index, x_score_pred, y_score_pred,index) %>%
+    gather(location, team,   -x_score_pred, -y_score_pred,-index) %>%
+    # calculate goals for/against the team
+    mutate(g_for = case_when(
+      location == "local_team_index" ~ x_score_pred,
+      location == "visitor_team_index" ~ y_score_pred
+    )) %>%
+    mutate(g_ag = case_when(
+      location == "local_team_index" ~ y_score_pred,
+      location == "visitor_team_index" ~ x_score_pred
+    )) 
+}
+
+x_updated$index <- 1:nrow(x_updated)
+
+x_updated_melted <- x_updated %>%
+  melt_results2()
+
+
+it_mod_game_statistics <- x_updated_melted %>%
+  mutate(win = ifelse(g_for > g_ag, 1,0),
+         loss = ifelse(g_for < g_ag, 1,0),
+         draw = ifelse(g_for == g_ag, 1,0))
+
+it_mod_game_statistics <- it_mod_game_statistics %>%
+  group_by(team) %>%
+  summarise ( W = sum(win),
+           L = sum (loss),
+           D = sum(draw),
+           GF = sum(g_for),
+           GA = sum(g_ag),
+           GD = GF - GA,
+           Pts = 3*W + 1*D
+           ) %>%
+  arrange(desc(Pts)) 
+
+it_mod_game_statistics <- x_updated_melted %>%
+  mutate(win = ifelse(g_for > g_ag, 1,0),
+         loss = ifelse(g_for < g_ag, 1,0),
+         draw = ifelse(g_for == g_ag, 1,0))
+
+it_mod_game_statistics <- it_mod_game_statistics %>%
+  group_by(team) %>%
+  summarise ( W = sum(win),
+           L = sum (loss),
+           D = sum(draw),
+           GF = sum(g_for),
+           GA = sum(g_ag),
+           GD = GF - GA,
+           Pts = 3*W + 1*D
+           ) %>%
+  arrange(desc(Pts)) 
+
+it_mod_game_statistics$team <- as.character(it_mod_game_statistics$team)
+  
+it_mod_game_statistics <- left_join(it_mod_game_statistics, teams[,c(1,2)], by= c("team"="team index"))
+  
+head(it_mod_game_statistics)
+```
+
