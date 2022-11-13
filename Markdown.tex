@@ -1,0 +1,1451 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Models for Football Data},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Models for Football Data}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{data-overview}{%
+\section{Data Overview}\label{data-overview}}
+
+We load football data from a Kaggle containing 1st division Spanish
+League results
+(\url{https://www.kaggle.com/datasets/ricardomoya/football-matches-of-spanish-league}),
+for the 2016-17 and 2017-18 seasons.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"tidyr"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"reshape2"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"nloptr"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"data.table"}\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/plamenapp/MastersThesis/master/FMEL\_Dataset.csv"}\NormalTok{)}
+ 
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(season }\SpecialCharTok{==} \StringTok{"2016{-}17"} \SpecialCharTok{|}\NormalTok{ season }\SpecialCharTok{==} \StringTok{"2017{-}18"}\NormalTok{ ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(division }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      id  season division round         localTeam        visitorTeam localGoals
+## 1 35464 2016-17        1     1            Malaga            Osasuna          1
+## 2 35465 2016-17        1     1         Deportivo              Eibar          2
+## 3 35466 2016-17        1     1         Barcelona              Betis          6
+## 4 35467 2016-17        1     1           Granada         Villarreal          1
+## 5 35468 2016-17        1     1           Sevilla            Espanol          6
+## 6 35469 2016-17        1     1 Sporting de Gijon Atletico de Bilbao          2
+##   visitorGoals       date  timestamp
+## 1            1 19/08/2016 1471557600
+## 2            1 19/08/2016 1471557600
+## 3            2 20/08/2016 1471644000
+## 4            1 20/08/2016 1471644000
+## 5            4 20/08/2016 1471644000
+## 6            1 21/08/2016 1471730400
+\end{verbatim}
+
+Reshaping the data so that we have one team per row.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{melt\_results }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(results\_df) \{}
+\NormalTok{  results\_df }\SpecialCharTok{\%\textgreater{}\%}
+    \CommentTok{\# select only relevant columns}
+    \FunctionTok{select}\NormalTok{(localTeam, visitorTeam, localGoals, visitorGoals, date) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{gather}\NormalTok{(location, team,  }\SpecialCharTok{{-}}\NormalTok{localGoals, }\SpecialCharTok{{-}}\NormalTok{visitorGoals, }\SpecialCharTok{{-}}\NormalTok{date) }\SpecialCharTok{\%\textgreater{}\%}
+    \CommentTok{\# calculate goals for/against the team}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g\_for =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"localTeam"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ localGoals,}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"visitorTeam"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ visitorGoals}
+\NormalTok{    )) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g\_ag =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"localTeam"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ visitorGoals,}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"visitorTeam"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ localGoals}
+\NormalTok{    )) }
+\NormalTok{\}}
+
+\NormalTok{data\_melted }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{melt\_results}\NormalTok{()}
+
+\FunctionTok{head}\NormalTok{(data\_melted)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   localGoals visitorGoals       date  location              team g_for g_ag
+## 1          1            1 19/08/2016 localTeam            Malaga     1    1
+## 2          2            1 19/08/2016 localTeam         Deportivo     2    1
+## 3          6            2 20/08/2016 localTeam         Barcelona     6    2
+## 4          1            1 20/08/2016 localTeam           Granada     1    1
+## 5          6            4 20/08/2016 localTeam           Sevilla     6    4
+## 6          2            1 21/08/2016 localTeam Sporting de Gijon     2    1
+\end{verbatim}
+
+Creating a ranking table for each team's statistics and ranking
+estimates. W,L and D are each team's number of wins, loses and draws
+respectively. GF, GA and GD represent the sum of goals for, against and
+the goal differences for each team. Points are calculated by the formula
+``Pts = 3W + 1D'' and teams are ranked accordingly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{game\_statistics }\OtherTok{\textless{}{-}}\NormalTok{ data\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{win =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{\textgreater{}}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{loss =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{\textless{}}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{draw =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{==}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+
+\NormalTok{game\_statistics }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(team) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{ ( }\AttributeTok{W =} \FunctionTok{sum}\NormalTok{(win),}
+           \AttributeTok{L =} \FunctionTok{sum}\NormalTok{ (loss),}
+           \AttributeTok{D =} \FunctionTok{sum}\NormalTok{(draw),}
+           \AttributeTok{GF =} \FunctionTok{sum}\NormalTok{(g\_for),}
+           \AttributeTok{GA =} \FunctionTok{sum}\NormalTok{(g\_ag),}
+           \AttributeTok{GD =}\NormalTok{ GF }\SpecialCharTok{{-}}\NormalTok{ GA,}
+           \AttributeTok{Pts =} \DecValTok{3}\SpecialCharTok{*}\NormalTok{W }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{*}\NormalTok{D}
+\NormalTok{           ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Pts)) }
+
+\NormalTok{game\_statistics}\SpecialCharTok{$}\NormalTok{ranking }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(game\_statistics)}
+  
+\FunctionTok{head}\NormalTok{(game\_statistics)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 9
+##   team                   W     L     D    GF    GA    GD   Pts ranking
+##   <chr>              <dbl> <dbl> <dbl> <int> <int> <int> <dbl>   <int>
+## 1 Barcelona             56     5    15   215    66   149   183       1
+## 2 Real Madrid           51     9    16   200    85   115   169       2
+## 3 Atletico de Madrid    46    11    19   128    49    79   157       3
+## 4 Sevilla               38    22    16   118   107    11   130       4
+## 5 Villarreal            37    22    17   113    83    30   128       5
+## 6 Valencia              35    27    14   121   103    18   119       6
+\end{verbatim}
+
+Simplifying the original data set to contain only relevant information
+that we'll need for modelling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{=}\NormalTok{ data[,}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\SpecialCharTok{:}\DecValTok{8}\NormalTok{)]}
+\NormalTok{n }\OtherTok{=} \FunctionTok{n\_distinct}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localTeam)}
+\NormalTok{teams }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{unique}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localTeam),}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n), }\AttributeTok{nrow =}\NormalTok{ n)}
+\NormalTok{teams }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(teams)}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"localTeam"} \OtherTok{=} \StringTok{"V1"}\NormalTok{))}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"visitorTeam"} \OtherTok{=} \StringTok{"V1"}\NormalTok{))}
+
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{local\_team\_index =}\NormalTok{ V2.x,}
+         \AttributeTok{visitor\_team\_index =}\NormalTok{ V2.y)}
+
+\FunctionTok{names}\NormalTok{(teams)[}\DecValTok{1}\NormalTok{]}\OtherTok{\textless{}{-}}\StringTok{"team"}
+\FunctionTok{names}\NormalTok{(teams)[}\DecValTok{2}\NormalTok{]}\OtherTok{\textless{}{-}}\StringTok{"team index"}
+
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{x [,}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)]}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{as.data.table}\NormalTok{(x)}
+
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{local\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{local\_team\_index)}
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index)}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{as.data.table}\NormalTok{(x)}
+\FunctionTok{head}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    localGoals visitorGoals local_team_index visitor_team_index
+## 1:          1            1                1                 13
+## 2:          2            1                2                 14
+## 3:          6            2                3                 11
+## 4:          1            1                4                 20
+## 5:          6            4                5                 12
+## 6:          2            1                6                 19
+\end{verbatim}
+
+\hypertarget{models}{%
+\section{Models}\label{models}}
+
+In the following sections we will model the data using two of the most
+famous and fundamental models in the field of football outcome
+predictions, namely the ones proposed by Maher(1982) and by Dixon and
+Coles(1997).
+
+In what follows we will rely on the assumption that the number of goals
+scored by each team in a single game follows a Poisson distribution. As
+each team has a relatively small chance of scoring a goal every time
+they are in possession of the ball, we can view the probability of
+scoring as a Binomial distribution with small \(p\) - the chance of
+scoring when in possession of the ball and large \(n\) - the number of
+times a team is in a possession of the ball. The Poisson distribution is
+known to be a good approximation for Binomial variables with such
+extreme parameters.
+
+We can check the above assumption by grouping all teams together into
+``home'' and ``away'' categories and plotting the distribution of the
+goals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(., }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ g\_for, }\AttributeTok{fill =}\NormalTok{ location)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{adjust =} \DecValTok{8}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{, }\StringTok{"red"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Goals scored at home and away"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"goals scored"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"density"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Markdown_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+It is evident that the home team tends to score more than the visiting
+one. Also both charts look like a Poisson distribution. For the home
+team we can take the average number of goals scored per match as the
+mean of a Poisson distribution and we can see how well the previous
+graph fits a simulated Poisson process.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ data\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( location }\SpecialCharTok{==} \StringTok{"localTeam"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(., }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ g\_for)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..),}\AttributeTok{fill=} \StringTok{"green"}\NormalTok{, }\AttributeTok{binwidth=}\DecValTok{1}\NormalTok{, }\AttributeTok{color =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Goals scored at home vs simulated Poisson distribution"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"goals scored"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"density"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+
+\NormalTok{local\_team\_data }\OtherTok{\textless{}{-}}\NormalTok{ data\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( location }\SpecialCharTok{==} \StringTok{"localTeam"}\NormalTok{)}
+
+\NormalTok{simulated\_poisson }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{dist =} \FunctionTok{rpois}\NormalTok{(}\DecValTok{100000}\NormalTok{, }\FunctionTok{mean}\NormalTok{(local\_team\_data}\SpecialCharTok{$}\NormalTok{localGoals)))}
+
+\NormalTok{p1 }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{data =}\NormalTok{ simulated\_poisson, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ dist),}
+                  \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{adjust =} \DecValTok{8}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Markdown_files/figure-latex/unnamed-chunk-6-1.pdf}
+Similarly one can conclude that the goals scored by the visiting team
+also follow a Poisson process but with a different mean.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ data\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( location }\SpecialCharTok{==} \StringTok{"visitorTeam"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(., }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ g\_for)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..),}\AttributeTok{fill=} \StringTok{"red"}\NormalTok{, }\AttributeTok{binwidth=}\DecValTok{1}\NormalTok{, }\AttributeTok{color =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Goals scored by guest team vs simulated Poisson distribution"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"goals scored"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"density"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+
+\NormalTok{visitor\_team\_data }\OtherTok{\textless{}{-}}\NormalTok{ data\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( location }\SpecialCharTok{==} \StringTok{"visitorTeam"}\NormalTok{)}
+
+\NormalTok{simulated\_poisson }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{dist =} \FunctionTok{rpois}\NormalTok{(}\DecValTok{100000}\NormalTok{, }\FunctionTok{mean}\NormalTok{(visitor\_team\_data}\SpecialCharTok{$}\NormalTok{visitorGoals)))}
+
+\NormalTok{p1 }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{data =}\NormalTok{ simulated\_poisson, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ dist),}
+                  \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{adjust =} \DecValTok{8}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Markdown_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+Hence, the probability of team i scoring x goals against team j can be
+estimated by Poisson distribution: \[
+P(x_i=x) = \frac{\alpha^x_ie^{−\alpha_i}}{x!} 
+\]
+
+\hypertarget{mahers-poisson-model}{%
+\section{Maher's Poisson Model}\label{mahers-poisson-model}}
+
+In 1982 Maher proposed that the goals scored by each team can be modeled
+by two independent Poisson variables - \(X_{ij}\) and \(Y_{ij}\), where
+\(i\) is the home team and \(j\) is the visiting one. In particular the
+model suggests that:
+
+\[
+X_{ij} \sim Poisson(\alpha_i\beta_j)
+\]
+
+\[
+Y_{ij}\sim Poisson(\gamma_i\delta_j)
+\] where \(\alpha\) is an estimate of each team's attack strength and
+\(\beta_j\) is each team's defense weakness parameter when playing away.
+Similarly \(\gamma\) and \(\delta\) are measures of the team's attack
+and defense when playing away and at home repectivley. The model also
+assumes that the scores of the two teams are independent.
+
+In what follows we calculate the four parameters for each team following
+the iterative approach proposed by Maher.
+
+We start by Calculating alpha and beta based on ``home scores''. Results
+after the first iteration:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x\_balanced }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(local\_team\_index,visitor\_team\_index) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{localGoals =} \FunctionTok{mean}\NormalTok{(localGoals),}
+        \AttributeTok{visitorGoals =} \FunctionTok{mean}\NormalTok{(visitorGoals))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'local_team_index'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Sx }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(x\_balanced}\SpecialCharTok{$}\NormalTok{localGoals)}
+\NormalTok{local }\OtherTok{\textless{}{-}}\NormalTok{ x\_balanced }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(local\_team\_index) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{localGoals\_local =} \FunctionTok{sum}\NormalTok{(localGoals),}
+            \AttributeTok{alpha =} \FunctionTok{sum}\NormalTok{(localGoals)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(Sx))}
+\NormalTok{visitor }\OtherTok{\textless{}{-}}\NormalTok{ x\_balanced }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(visitor\_team\_index) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{localGoals\_visitor =} \FunctionTok{sum}\NormalTok{(localGoals),}
+            \AttributeTok{beta =} \FunctionTok{sum}\NormalTok{(localGoals)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(Sx))}
+
+\NormalTok{it\_data }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(local, visitor, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"local\_team\_index"} \OtherTok{=} \StringTok{"visitor\_team\_index"}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data))\{}
+\NormalTok{  it\_data}\SpecialCharTok{$}\NormalTok{beta[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{localGoals\_visitor[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{alpha[i])}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data))\{}
+\NormalTok{  it\_data}\SpecialCharTok{$}\NormalTok{alpha[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{localGoals\_local[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{beta)}\SpecialCharTok{{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{beta[i])}
+\NormalTok{\}}
+
+\FunctionTok{head}\NormalTok{(it\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   local_team_index localGoals_local alpha localGoals_visitor  beta
+##              <int>            <dbl> <dbl>              <dbl> <dbl>
+## 1                1             25.5 0.910               34   1.25 
+## 2                2             29   1.05                45.5 1.68 
+## 3                3             70   2.47                22.5 0.881
+## 4                4             17   0.620               50   1.82 
+## 5                5             39.5 1.42                38.5 1.45 
+## 6                6             26   0.928               34   1.25
+\end{verbatim}
+
+Results after the second iteration are very close to the earlier one.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data))\{}
+\NormalTok{  it\_data}\SpecialCharTok{$}\NormalTok{beta[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{localGoals\_visitor[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{alpha[i])}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data))\{}
+\NormalTok{  it\_data}\SpecialCharTok{$}\NormalTok{alpha[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{localGoals\_local[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{beta)}\SpecialCharTok{{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{beta[i])}
+\NormalTok{\}}
+\FunctionTok{head}\NormalTok{(it\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   local_team_index localGoals_local alpha localGoals_visitor  beta
+##              <int>            <dbl> <dbl>              <dbl> <dbl>
+## 1                1             25.5 0.910               34   1.25 
+## 2                2             29   1.05                45.5 1.69 
+## 3                3             70   2.47                22.5 0.880
+## 4                4             17   0.620               50   1.82 
+## 5                5             39.5 1.42                38.5 1.45 
+## 6                6             26   0.928               34   1.25
+\end{verbatim}
+
+The process continues until the the estimated \(\alpha\) and \(\beta\)
+stop changing and converge to their true values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{it\_data}\SpecialCharTok{$}\NormalTok{alpha\_prev }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{it\_data}\SpecialCharTok{$}\NormalTok{beta\_prev }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{counter }\OtherTok{\textless{}{-}} \DecValTok{2}
+\ControlFlowTok{while}\NormalTok{(}\FunctionTok{identical}\NormalTok{(}\FunctionTok{round}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{alpha\_prev,}\DecValTok{6}\NormalTok{),}\FunctionTok{round}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{alpha,}\DecValTok{6}\NormalTok{))}\SpecialCharTok{==}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{\{}
+\NormalTok{it\_data}\SpecialCharTok{$}\NormalTok{alpha\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{alpha}
+\NormalTok{it\_data}\SpecialCharTok{$}\NormalTok{beta\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{beta}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data))\{}
+\NormalTok{  it\_data}\SpecialCharTok{$}\NormalTok{beta[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{localGoals\_visitor[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{alpha[i])}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data))\{}
+\NormalTok{  it\_data}\SpecialCharTok{$}\NormalTok{alpha[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{localGoals\_local[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data}\SpecialCharTok{$}\NormalTok{beta)}\SpecialCharTok{{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{beta[i])}
+\NormalTok{\}}
+\NormalTok{it\_data}\SpecialCharTok{$}\NormalTok{alpha\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{alpha}
+\NormalTok{it\_data}\SpecialCharTok{$}\NormalTok{beta\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{beta }
+\NormalTok{counter }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(counter, }\DecValTok{1}\NormalTok{)}
+\NormalTok{\}}
+\FunctionTok{head}\NormalTok{(it\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 7
+##   local_team_index localGoals_local alpha localGoals_visitor  beta alpha_prev
+##              <int>            <dbl> <dbl>              <dbl> <dbl>      <dbl>
+## 1                1             25.5 0.910               34   1.25       0.910
+## 2                2             29   1.05                45.5 1.69       1.05 
+## 3                3             70   2.47                22.5 0.880      2.47 
+## 4                4             17   0.620               50   1.82       0.620
+## 5                5             39.5 1.42                38.5 1.45       1.42 
+## 6                6             26   0.928               34   1.25       0.928
+## # ... with 1 more variable: beta_prev <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Number of iterations: "}\NormalTok{ , counter))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Number of iterations: 3"
+\end{verbatim}
+
+Only after three iterations the results converge and so these are our
+true values for \(\alpha\) - attack straight when playing at home and
+\(\beta\) - weakness of defense when playing away. Ranking the teams
+just based on skill(\(\alpha\) / \(\beta\) ) gives results close to the
+original ranking.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{alpha}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ it\_data}\SpecialCharTok{$}\NormalTok{beta}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{attack }\OtherTok{\textless{}{-}}\NormalTok{ alpha}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{defence }\OtherTok{\textless{}{-}}\NormalTok{ beta}
+\CommentTok{\#teams \textless{}{-} select(teams,{-}alpha,{-}beta)}
+\NormalTok{game\_statistics\_mod4 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(game\_statistics,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"team"}\NormalTok{))}
+\NormalTok{game\_statistics\_mod4 }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics\_mod4 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{skill =}\NormalTok{ attack}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{defence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(skill))}
+\FunctionTok{head}\NormalTok{(game\_statistics\_mod4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 13
+##   team         W     L     D    GF    GA    GD   Pts ranking `team index` attack
+##   <chr>    <dbl> <dbl> <dbl> <int> <int> <int> <dbl>   <int> <chr>         <dbl>
+## 1 Barcelo~    56     5    15   215    66   149   183       1 3             2.47 
+## 2 Atletic~    46    11    19   128    49    79   157       3 8             1.59 
+## 3 Real Ma~    51     9    16   200    85   115   169       2 15            2.20 
+## 4 Villarr~    37    22    17   113    83    30   128       5 20            1.43 
+## 5 Real So~    33    29    14   125   112    13   113       7 7             1.68 
+## 6 Getafe      15    13    10    42    33     9    55      18 23            0.911
+## # ... with 2 more variables: defence <dbl>, skill <dbl>
+\end{verbatim}
+
+We repeat the same calculations for gamma and delta based on ``visitor
+scores''. Results after the first iteration:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x\_balanced }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(local\_team\_index,visitor\_team\_index) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{localGoals =} \FunctionTok{mean}\NormalTok{(localGoals),}
+        \AttributeTok{visitorGoals =} \FunctionTok{mean}\NormalTok{(visitorGoals))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'local_team_index'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Sy }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(x\_balanced}\SpecialCharTok{$}\NormalTok{visitorGoals)}
+\NormalTok{local }\OtherTok{\textless{}{-}}\NormalTok{ x\_balanced }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(local\_team\_index) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{visitorGoals\_local =} \FunctionTok{sum}\NormalTok{(visitorGoals),}
+            \AttributeTok{gamma =} \FunctionTok{sum}\NormalTok{(visitorGoals)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(Sy))}
+\NormalTok{visitor }\OtherTok{\textless{}{-}}\NormalTok{ x\_balanced }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(visitor\_team\_index) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{visitorGoals\_visitor =} \FunctionTok{sum}\NormalTok{(visitorGoals),}
+            \AttributeTok{delta =} \FunctionTok{sum}\NormalTok{(visitorGoals)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(Sy))}
+
+\NormalTok{it\_data2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(local, visitor, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"local\_team\_index"} \OtherTok{=} \StringTok{"visitor\_team\_index"}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data2))\{}
+\NormalTok{  it\_data2}\SpecialCharTok{$}\NormalTok{delta[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{visitorGoals\_visitor[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{gamma)}\SpecialCharTok{{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{gamma[i])}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data2))\{}
+\NormalTok{  it\_data2}\SpecialCharTok{$}\NormalTok{gamma[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{visitorGoals\_local[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{delta)}\SpecialCharTok{{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{delta[i])}
+\NormalTok{\}}
+
+\FunctionTok{head}\NormalTok{(it\_data2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   local_team_index visitorGoals_local gamma visitorGoals_visitor delta
+##              <int>              <dbl> <dbl>                <dbl> <dbl>
+## 1                1               28.5 1.15                  15.5 0.668
+## 2                2               31   1.26                  19   0.823
+## 3                3               15.5 0.677                 59.5 2.51 
+## 4                4               32   1.29                  13   0.564
+## 5                5               19.5 0.806                 28.5 1.21 
+## 6                6               38   1.54                  16   0.702
+\end{verbatim}
+
+Results after second iteration.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data2))\{}
+\NormalTok{  it\_data2}\SpecialCharTok{$}\NormalTok{delta[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{visitorGoals\_visitor[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{gamma)}\SpecialCharTok{{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{gamma[i])}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data2))\{}
+\NormalTok{  it\_data2}\SpecialCharTok{$}\NormalTok{gamma[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{visitorGoals\_local[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{delta)}\SpecialCharTok{{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{delta[i])}
+\NormalTok{\}}
+
+\FunctionTok{head}\NormalTok{(it\_data2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   local_team_index visitorGoals_local gamma visitorGoals_visitor delta
+##              <int>              <dbl> <dbl>                <dbl> <dbl>
+## 1                1               28.5 1.15                  15.5 0.668
+## 2                2               31   1.26                  19   0.822
+## 3                3               15.5 0.677                 59.5 2.51 
+## 4                4               32   1.29                  13   0.563
+## 5                5               19.5 0.806                 28.5 1.21 
+## 6                6               38   1.54                  16   0.701
+\end{verbatim}
+
+Again the results converge after the third iteration and these are our
+true values for \delta - attack straight when playing at away and
+\gamma - weakness of defense when playing at home.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{it\_data2}\SpecialCharTok{$}\NormalTok{delta\_prev }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{it\_data2}\SpecialCharTok{$}\NormalTok{gamma\_prev }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{counter }\OtherTok{\textless{}{-}} \DecValTok{2}
+\ControlFlowTok{while}\NormalTok{(}\FunctionTok{identical}\NormalTok{(}\FunctionTok{round}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{delta\_prev,}\DecValTok{6}\NormalTok{),}\FunctionTok{round}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{delta,}\DecValTok{6}\NormalTok{))}\SpecialCharTok{==}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{\{}
+\NormalTok{it\_data2}\SpecialCharTok{$}\NormalTok{delta\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{delta}
+\NormalTok{it\_data2}\SpecialCharTok{$}\NormalTok{gamma\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{gamma}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data2))\{}
+\NormalTok{  it\_data2}\SpecialCharTok{$}\NormalTok{delta[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{visitorGoals\_visitor[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{gamma)}\SpecialCharTok{{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{gamma[i])}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_data2))\{}
+\NormalTok{  it\_data2}\SpecialCharTok{$}\NormalTok{gamma[i] }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{visitorGoals\_local[i]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{(it\_data2}\SpecialCharTok{$}\NormalTok{delta)}\SpecialCharTok{{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{delta[i])}
+\NormalTok{\}}
+\NormalTok{it\_data2}\SpecialCharTok{$}\NormalTok{delta\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{delta}
+\NormalTok{it\_data2}\SpecialCharTok{$}\NormalTok{gamma\_prev }\OtherTok{\textless{}{-}}\NormalTok{ it\_data2}\SpecialCharTok{$}\NormalTok{gamma}
+\NormalTok{counter }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(counter, }\DecValTok{1}\NormalTok{)}
+\NormalTok{\}}
+
+
+
+\FunctionTok{head}\NormalTok{(it\_data2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 7
+##   local_team_index visitorGoals_local gamma visitorGoals_visit~ delta delta_prev
+##              <int>              <dbl> <dbl>               <dbl> <dbl>      <dbl>
+## 1                1               28.5 1.15                 15.5 0.668      0.668
+## 2                2               31   1.26                 19   0.822      0.822
+## 3                3               15.5 0.677                59.5 2.51       2.51 
+## 4                4               32   1.29                 13   0.563      0.563
+## 5                5               19.5 0.806                28.5 1.21       1.21 
+## 6                6               38   1.54                 16   0.701      0.701
+## # ... with 1 more variable: gamma_prev <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Number of iterations: "}\NormalTok{,counter))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Number of iterations: 3"
+\end{verbatim}
+
+We compare the actual games outcomes with the ones predicted by the
+model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{verify\_model }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(it\_data,it\_data2, }\AttributeTok{by =} \StringTok{"local\_team\_index"}\NormalTok{)}
+\NormalTok{verify\_model }\OtherTok{\textless{}{-}}\NormalTok{ verify\_model[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{11}\NormalTok{)]}
+\NormalTok{verify\_model }\OtherTok{\textless{}{-}}\NormalTok{ verify\_model }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{team\_index =}\NormalTok{ local\_team\_index)}
+\NormalTok{x\_updated }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x,verify\_model[,}\FunctionTok{c}\NormalTok{(}\StringTok{"team\_index"}\NormalTok{,}\StringTok{"alpha"}\NormalTok{,}\StringTok{"gamma"}\NormalTok{)], }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"local\_team\_index"} \OtherTok{=} \StringTok{"team\_index"}\NormalTok{))}
+\NormalTok{x\_updated }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x\_updated,verify\_model[,}\FunctionTok{c}\NormalTok{(}\StringTok{"team\_index"}\NormalTok{,}\StringTok{"beta"}\NormalTok{,}\StringTok{"delta"}\NormalTok{)], }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"visitor\_team\_index"} \OtherTok{=} \StringTok{"team\_index"}\NormalTok{))}
+\NormalTok{x\_updated }\OtherTok{\textless{}{-}}\NormalTok{ x\_updated }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{( }\AttributeTok{x\_score\_pred =} \FunctionTok{round}\NormalTok{(alpha}\SpecialCharTok{*}\NormalTok{beta,}\DecValTok{0}\NormalTok{),}
+          \AttributeTok{y\_score\_pred =} \FunctionTok{round}\NormalTok{(delta}\SpecialCharTok{*}\NormalTok{gamma,}\DecValTok{0}\NormalTok{))}
+
+\FunctionTok{head}\NormalTok{(x\_updated)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    localGoals visitorGoals local_team_index visitor_team_index     alpha
+## 1:          1            1                1                 13 0.9104265
+## 2:          2            1                2                 14 1.0516267
+## 3:          6            2                3                 11 2.4663358
+## 4:          1            1                4                 20 0.6195603
+## 5:          6            4                5                 12 1.4200520
+## 6:          2            1                6                 19 0.9283053
+##        gamma      beta     delta x_score_pred y_score_pred
+## 1: 1.1520080 2.0217492 0.7459748            2            1
+## 2: 1.2609412 1.2662050 1.1976528            1            2
+## 3: 0.6769818 1.4361038 1.1465297            4            1
+## 4: 1.2880485 0.9768321 1.1303725            1            1
+## 5: 0.8058670 1.0540663 0.9578120            1            1
+## 6: 1.5380740 1.2450600 1.0190937            1            2
+\end{verbatim}
+
+Ranking the teams based on the predicted games outcomes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{melt\_results2 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(results\_df) \{}
+\NormalTok{  results\_df }\SpecialCharTok{\%\textgreater{}\%}
+    \CommentTok{\# select only relevant columns}
+    \FunctionTok{select}\NormalTok{(local\_team\_index, visitor\_team\_index, x\_score\_pred, y\_score\_pred,index) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{gather}\NormalTok{(location, team,   }\SpecialCharTok{{-}}\NormalTok{x\_score\_pred, }\SpecialCharTok{{-}}\NormalTok{y\_score\_pred,}\SpecialCharTok{{-}}\NormalTok{index) }\SpecialCharTok{\%\textgreater{}\%}
+    \CommentTok{\# calculate goals for/against the team}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g\_for =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"local\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ x\_score\_pred,}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"visitor\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ y\_score\_pred}
+\NormalTok{    )) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g\_ag =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"local\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ y\_score\_pred,}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"visitor\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ x\_score\_pred}
+\NormalTok{    )) }
+\NormalTok{\}}
+
+\NormalTok{x\_updated}\SpecialCharTok{$}\NormalTok{index }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(x\_updated)}
+
+\NormalTok{x\_updated\_melted }\OtherTok{\textless{}{-}}\NormalTok{ x\_updated }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{melt\_results2}\NormalTok{()}
+
+
+\NormalTok{it\_mod\_game\_statistics }\OtherTok{\textless{}{-}}\NormalTok{ x\_updated\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{win =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{\textgreater{}}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{loss =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{\textless{}}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{draw =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{==}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+
+\NormalTok{it\_mod\_game\_statistics }\OtherTok{\textless{}{-}}\NormalTok{ it\_mod\_game\_statistics }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(team) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{ ( }\AttributeTok{W\_pred =} \FunctionTok{sum}\NormalTok{(win),}
+           \AttributeTok{L\_pred =} \FunctionTok{sum}\NormalTok{ (loss),}
+           \AttributeTok{D\_pred =} \FunctionTok{sum}\NormalTok{(draw),}
+           \AttributeTok{GF\_pred =} \FunctionTok{sum}\NormalTok{(g\_for),}
+           \AttributeTok{GA\_pred =} \FunctionTok{sum}\NormalTok{(g\_ag),}
+           \AttributeTok{GD\_pred =}\NormalTok{ GF\_pred }\SpecialCharTok{{-}}\NormalTok{ GA\_pred,}
+           \AttributeTok{Pts\_pred =} \DecValTok{3}\SpecialCharTok{*}\NormalTok{W\_pred }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{*}\NormalTok{D\_pred}
+\NormalTok{           ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Pts\_pred)) }
+
+\CommentTok{\# it\_mod\_game\_statistics \textless{}{-} x\_updated\_melted \%\textgreater{}\%}
+\CommentTok{\#   mutate(win = ifelse(g\_for \textgreater{} g\_ag, 1,0),}
+\CommentTok{\#          loss = ifelse(g\_for \textless{} g\_ag, 1,0),}
+\CommentTok{\#          draw = ifelse(g\_for == g\_ag, 1,0))}
+\CommentTok{\# }
+\CommentTok{\# it\_mod\_game\_statistics \textless{}{-} it\_mod\_game\_statistics \%\textgreater{}\%}
+\CommentTok{\#   group\_by(team) \%\textgreater{}\%}
+\CommentTok{\#   summarise ( W = sum(win),}
+\CommentTok{\#            L = sum (loss),}
+\CommentTok{\#            D = sum(draw),}
+\CommentTok{\#            GF = sum(g\_for),}
+\CommentTok{\#            GA = sum(g\_ag),}
+\CommentTok{\#            GD = GF {-} GA,}
+\CommentTok{\#            Pts = 3*W + 1*D}
+\CommentTok{\#            ) \%\textgreater{}\%}
+\CommentTok{\#   arrange(desc(Pts)) }
+
+\NormalTok{it\_mod\_game\_statistics}\SpecialCharTok{$}\NormalTok{team }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(it\_mod\_game\_statistics}\SpecialCharTok{$}\NormalTok{team)}
+  
+\NormalTok{it\_mod\_game\_statistics }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(it\_mod\_game\_statistics, teams[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)], }\AttributeTok{by=} \FunctionTok{c}\NormalTok{(}\StringTok{"team"}\OtherTok{=}\StringTok{"team index"}\NormalTok{))}
+\NormalTok{it\_mod\_game\_statistics }\OtherTok{\textless{}{-}}\NormalTok{ it\_mod\_game\_statistics }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{team\_number =}\NormalTok{ team,}
+         \AttributeTok{team =}\NormalTok{ team.y)}
+
+\NormalTok{it\_mod\_game\_statistics}\SpecialCharTok{$}\NormalTok{pred\_ranking }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(it\_mod\_game\_statistics)}
+
+\NormalTok{it\_mod\_game\_statistics }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(it\_mod\_game\_statistics, game\_statistics[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{9}\NormalTok{)], }\StringTok{"team"}\NormalTok{)}
+  
+\NormalTok{it\_mod\_game\_statistics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 23 x 11
+##    team_number W_pred L_pred D_pred GF_pred GA_pred GD_pred Pts_pred team       
+##    <chr>        <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>    <dbl> <chr>      
+##  1 3               71      0      5     219      71     148      218 Barcelona  
+##  2 15              67      8      1     199      90     109      202 Real Madrid
+##  3 8               62      0     14     143      55      88      200 Atletico d~
+##  4 10              41     16     19     125     104      21      142 Valencia   
+##  5 20              35     12     29     115      88      27      134 Villarreal 
+##  6 7               36     18     22     126     108      18      130 Real Socie~
+##  7 5               30     20     26     118     109       9      116 Sevilla    
+##  8 14              23     20     33     103     104      -1      102 Eibar      
+##  9 9               23     28     25     113     124     -11       94 Celta de V~
+## 10 19              15     22     39      91     101     -10       84 Atletico d~
+## # ... with 13 more rows, and 2 more variables: pred_ranking <int>,
+## #   ranking <int>
+\end{verbatim}
+
+The top three teams are ranked correctly by the model but there are some
+mismatches further down the chart. Valencia for example was ranked 4th
+by the model while in reality it held the sixth position in the original
+ranking. Nevertheless the model performed well as most teams were just
+one position up or down from the original ranking.
+
+\hypertarget{mahers-model---a-simplified-version}{%
+\section{Maher's Model - A Simplified
+Version}\label{mahers-model---a-simplified-version}}
+
+After looking into the significance of each of the four parameters Maher
+concludes that the home advantage applies with equal effect to all
+teams' scoring power. Hence he proposes a simplified model with the
+following parameters \(\alpha_i\), \(\beta_j\), \(\gamma\), where the
+latter is the so-called home advantage.
+
+Ultimately Maher arrives at the following Poisson model which takes into
+account the team's attack, the defense of its opponent and if the team
+is playing at home. As we saw earlier, in general football teams tend to
+perform better at home, so we want to factor that in.
+
+\[
+X_{ij} \sim Poisson(\alpha_i\beta_j\gamma)
+\]
+
+\[
+Y_{ij}\sim Poisson(\alpha_j\beta_i)
+\] Due to the independence of \(X_i,_j\) and \(Y_i,_j\) we are
+interested in the following model:
+
+\[
+P(X_i,_j = x, Y_i,_j = y) = \frac{\lambda e^{-\lambda}}{x!}\frac{\mu e^{-\mu}}{x!}
+\] where
+
+\[
+\lambda = \alpha_i\beta_j\gamma
+\] \[
+\mu = \alpha_j\beta_i
+\] The likelihood function of the Poisson model is given by
+
+\[
+L(\alpha_i,\beta_i,\gamma,i = 1,2,...,n) = \prod_{k=1}^{N} e^{-\lambda_k}\lambda_k^{x_k} e^{-\mu_k}\mu_k^{x_k} 
+\] and we'd like to find the set of parameters that will minimize it.
+
+In what follows we apply a constraint optimization algorithm where we
+are using the following constraint:
+
+\[
+\sum_{i=1}^n\frac{\alpha_i}{n}=1
+\] or the equivalent
+
+\[
+ln(\sum_{i=1}^n\frac{\alpha_i}{n}=1) = 0
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{=}\NormalTok{ data[,}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\SpecialCharTok{:}\DecValTok{8}\NormalTok{)]}
+\NormalTok{n }\OtherTok{=} \FunctionTok{n\_distinct}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localTeam)}
+\NormalTok{teams }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{unique}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localTeam),}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n), }\AttributeTok{nrow =}\NormalTok{ n)}
+\NormalTok{teams }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(teams)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"localTeam"} \OtherTok{=} \StringTok{"V1"}\NormalTok{))}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"visitorTeam"} \OtherTok{=} \StringTok{"V1"}\NormalTok{))}
+
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{local\_team\_index =}\NormalTok{ V2.x,}
+         \AttributeTok{visitor\_team\_index =}\NormalTok{ V2.y)}
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{x [,}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)]}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{as.data.table}\NormalTok{(x)}
+
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{local\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{local\_team\_index)}
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index)}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{as.data.table}\NormalTok{(x)}
+
+\NormalTok{f\_lambda }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(alfa, beta, gama)\{}
+\NormalTok{  gama}\SpecialCharTok{*}\NormalTok{alfa[x}\SpecialCharTok{$}\NormalTok{local\_team\_index]}\SpecialCharTok{*}\NormalTok{beta[x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index] }
+\NormalTok{\}}
+
+\NormalTok{f\_mu }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(alfa, beta, gama)\{}
+\NormalTok{  beta[x}\SpecialCharTok{$}\NormalTok{local\_team\_index]}\SpecialCharTok{*}\NormalTok{alfa[x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index]}
+\NormalTok{\}}
+
+\NormalTok{f\_l }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(w) \{}
+\NormalTok{  alfa }\OtherTok{=}\NormalTok{ w[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n] }
+\NormalTok{  beta }\OtherTok{=}\NormalTok{ w[(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n)]}
+\NormalTok{  gama }\OtherTok{=}\NormalTok{ w[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lambda }\OtherTok{=} \FunctionTok{f\_lambda}\NormalTok{(alfa, beta, gama)}
+\NormalTok{  mu }\OtherTok{=}     \FunctionTok{f\_mu}\NormalTok{(alfa, beta, gama)}
+  
+  \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localGoals }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(lambda) }\SpecialCharTok{+}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(mu) }\SpecialCharTok{{-}}\NormalTok{ lambda }\SpecialCharTok{{-}}\NormalTok{ mu) }
+\NormalTok{\}}
+
+\NormalTok{eq }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(w) \{}
+\NormalTok{  alfa }\OtherTok{=}\NormalTok{ w[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]}
+  \FunctionTok{c}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\FunctionTok{sum}\NormalTok{(alfa)}\SpecialCharTok{/}\NormalTok{n))}
+\NormalTok{\}}
+
+\NormalTok{w0 }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{warn =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\FunctionTok{suppressMessages}\NormalTok{(}
+\NormalTok{S }\OtherTok{\textless{}{-}} \FunctionTok{slsqp}\NormalTok{(w0, }\AttributeTok{fn =}\NormalTok{ f\_l,}
+           \AttributeTok{heq =}\NormalTok{ eq,}
+           \AttributeTok{control =} \FunctionTok{list}\NormalTok{(}\AttributeTok{xtol\_rel =} \FloatTok{1e{-}9}\NormalTok{, }\AttributeTok{print\_level =} \DecValTok{0}\NormalTok{)}
+\NormalTok{            )}
+\NormalTok{)}
+\NormalTok{S}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $par
+##  [1] 0.7047161 0.7902357 2.0308545 0.5646186 1.1354731 0.7835834 1.2060606
+##  [8] 1.1974115 1.0894378 1.1621212 0.9801410 0.8112950 0.7622612 0.9589854
+## [15] 1.9070778 0.6724318 0.7552111 0.7734235 0.8973712 1.0744559 1.0170870
+## [22] 0.8937945 0.8319521 1.2565258 1.4904154 0.7660501 1.7923524 1.1847218
+## [29] 1.5914687 1.2446023 0.5442704 1.4249347 1.1419987 1.3730485 1.0019294
+## [36] 2.0754782 1.1082266 0.9800376 1.1463419 1.6072383 1.0108828 1.0063126
+## [43] 0.9161140 1.2779447 1.2485385 0.7081850 1.3232104
+## 
+## $value
+## [1] 1191.439
+## 
+## $iter
+## [1] 212
+## 
+## $convergence
+## [1] 4
+## 
+## $message
+## [1] "NLOPT_XTOL_REACHED: Optimization stopped because xtol_rel or xtol_abs (above) was reached."
+\end{verbatim}
+
+We rank teams based on the combination of their attack and defense.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ S}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ S}\SpecialCharTok{$}\NormalTok{par[(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n)]}
+\NormalTok{gamma }\OtherTok{\textless{}{-}}\NormalTok{ S}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ alpha}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ beta}
+\NormalTok{teams }\OtherTok{\textless{}{-}}\NormalTok{ teams }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{team =}\NormalTok{ V1,}
+         \AttributeTok{team\_number =}\NormalTok{ V2)}
+
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(game\_statistics,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"team"}\NormalTok{))}
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics\_mod1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{skill =}\NormalTok{ alpha}\SpecialCharTok{/}\NormalTok{beta) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(skill))}
+
+\FunctionTok{head}\NormalTok{(game\_statistics\_mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 13
+##   team           W     L     D    GF    GA    GD   Pts ranking team_number alpha
+##   <chr>      <dbl> <dbl> <dbl> <int> <int> <int> <dbl>   <int> <chr>       <dbl>
+## 1 Barcelona     56     5    15   215    66   149   183       1 3           2.03 
+## 2 Atletico ~    46    11    19   128    49    79   157       3 8           1.20 
+## 3 Real Madr~    51     9    16   200    85   115   169       2 15          1.91 
+## 4 Getafe        15    13    10    42    33     9    55      18 23          0.832
+## 5 Villarreal    37    22    17   113    83    30   128       5 20          1.07 
+## 6 Valencia      35    27    14   121   103    18   119       6 10          1.16 
+## # ... with 2 more variables: beta <dbl>, skill <dbl>
+\end{verbatim}
+
+Note that some of the teams with low real life ranking like Getafe (18th
+position in the real ranking) have pretty high attack/defense scores. In
+Getafe's case the higher predicted ranking is due to the strong defense
+of the team. Getaffe is actually the team with the least number of goals
+scored against them. However, this ranking doesn't accounting for the
+home advantage and the actual games played.
+
+Ranking teams based on the predicted games outcomes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{local\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{local\_team\_index)}
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index)}
+\NormalTok{x\_updated }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x,teams[,}\FunctionTok{c}\NormalTok{(}\StringTok{"team\_number"}\NormalTok{,}\StringTok{"alpha"}\NormalTok{,}\StringTok{"beta"}\NormalTok{)], }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"local\_team\_index"} \OtherTok{=} \StringTok{"team\_number"}\NormalTok{))}
+\NormalTok{x\_updated }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(x\_updated,teams[,}\FunctionTok{c}\NormalTok{(}\StringTok{"team\_number"}\NormalTok{,}\StringTok{"alpha"}\NormalTok{,}\StringTok{"beta"}\NormalTok{)], }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"visitor\_team\_index"} \OtherTok{=} \StringTok{"team\_number"}\NormalTok{))}
+\NormalTok{x\_updated }\OtherTok{\textless{}{-}}\NormalTok{ x\_updated }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{( }\AttributeTok{x\_score\_pred =} \FunctionTok{round}\NormalTok{(alpha.x}\SpecialCharTok{*}\NormalTok{beta.y}\SpecialCharTok{*}\NormalTok{gamma,}\DecValTok{0}\NormalTok{),}
+          \AttributeTok{y\_score\_pred =} \FunctionTok{round}\NormalTok{(alpha.y}\SpecialCharTok{*}\NormalTok{beta.x,}\DecValTok{0}\NormalTok{))}
+
+\NormalTok{melt\_results2 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(results\_df) \{}
+\NormalTok{  results\_df }\SpecialCharTok{\%\textgreater{}\%}
+    \CommentTok{\# select only relevant columns}
+    \FunctionTok{select}\NormalTok{(local\_team\_index, visitor\_team\_index, x\_score\_pred, y\_score\_pred,index) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{gather}\NormalTok{(location, team,   }\SpecialCharTok{{-}}\NormalTok{x\_score\_pred, }\SpecialCharTok{{-}}\NormalTok{y\_score\_pred,}\SpecialCharTok{{-}}\NormalTok{index) }\SpecialCharTok{\%\textgreater{}\%}
+    \CommentTok{\# calculate goals for/against the team}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g\_for =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"local\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ x\_score\_pred,}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"visitor\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ y\_score\_pred}
+\NormalTok{    )) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g\_ag =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"local\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ y\_score\_pred,}
+\NormalTok{      location }\SpecialCharTok{==} \StringTok{"visitor\_team\_index"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ x\_score\_pred}
+\NormalTok{    )) }
+\NormalTok{\}}
+
+\NormalTok{x\_updated}\SpecialCharTok{$}\NormalTok{index }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(x\_updated)}
+
+\NormalTok{x\_updated\_melted }\OtherTok{\textless{}{-}}\NormalTok{ x\_updated }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{melt\_results2}\NormalTok{()}
+
+
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}}\NormalTok{ x\_updated\_melted }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{win =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{\textgreater{}}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{loss =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{\textless{}}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{draw =} \FunctionTok{ifelse}\NormalTok{(g\_for }\SpecialCharTok{==}\NormalTok{ g\_ag, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics\_mod1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(team) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{ ( }\AttributeTok{W\_pred =} \FunctionTok{sum}\NormalTok{(win),}
+           \AttributeTok{L\_pred =} \FunctionTok{sum}\NormalTok{ (loss),}
+           \AttributeTok{D\_pred =} \FunctionTok{sum}\NormalTok{(draw),}
+           \AttributeTok{GF\_pred =} \FunctionTok{sum}\NormalTok{(g\_for),}
+           \AttributeTok{GA\_pred =} \FunctionTok{sum}\NormalTok{(g\_ag),}
+           \AttributeTok{GD\_pred =}\NormalTok{ GF\_pred }\SpecialCharTok{{-}}\NormalTok{ GA\_pred,}
+           \AttributeTok{Pts\_pred =} \DecValTok{3}\SpecialCharTok{*}\NormalTok{W\_pred }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{*}\NormalTok{D\_pred}
+\NormalTok{           ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Pts\_pred)) }
+
+\CommentTok{\# game\_statistics\_mod1 \textless{}{-} x\_updated\_melted \%\textgreater{}\%}
+\CommentTok{\#   mutate(win = ifelse(g\_for \textgreater{} g\_ag, 1,0),}
+\CommentTok{\#          loss = ifelse(g\_for \textless{} g\_ag, 1,0),}
+\CommentTok{\#          draw = ifelse(g\_for == g\_ag, 1,0))}
+\CommentTok{\# }
+\CommentTok{\# game\_statistics\_mod1 \textless{}{-} game\_statistics\_mod1 \%\textgreater{}\%}
+\CommentTok{\#   group\_by(team) \%\textgreater{}\%}
+\CommentTok{\#   summarise ( W\_pred = sum(win),}
+\CommentTok{\#            L\_pred = sum (loss),}
+\CommentTok{\#            D\_pred = sum(draw),}
+\CommentTok{\#            GF\_pred = sum(g\_for),}
+\CommentTok{\#            GA\_pred = sum(g\_ag),}
+\CommentTok{\#            GD\_pred = GF\_pred {-} GA\_pred,}
+\CommentTok{\#            Pts\_pred = 3*W\_pred + 1*D\_pred}
+\CommentTok{\#            ) \%\textgreater{}\%}
+\CommentTok{\#   arrange(desc(Pts\_pred)) }
+
+\NormalTok{game\_statistics\_mod1}\SpecialCharTok{$}\NormalTok{team }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(game\_statistics\_mod1}\SpecialCharTok{$}\NormalTok{team)}
+  
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(game\_statistics\_mod1, teams[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)], }\AttributeTok{by=} \FunctionTok{c}\NormalTok{(}\StringTok{"team"}\OtherTok{=}\StringTok{"team\_number"}\NormalTok{))}
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics\_mod1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{team\_number =}\NormalTok{ team,}
+         \AttributeTok{team =}\NormalTok{ team.y)}
+
+\NormalTok{game\_statistics\_mod1}\SpecialCharTok{$}\NormalTok{pred\_ranking }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(game\_statistics\_mod1)}
+
+\NormalTok{game\_statistics\_mod1 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(game\_statistics\_mod1, game\_statistics[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{9}\NormalTok{)], }\StringTok{"team"}\NormalTok{)}
+  
+\NormalTok{game\_statistics\_mod1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 23 x 11
+##    team_number W_pred L_pred D_pred GF_pred GA_pred GD_pred Pts_pred team       
+##    <chr>        <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>    <dbl> <chr>      
+##  1 3               69      0      7     213      77     136      214 Barcelona  
+##  2 15              63      4      9     199      88     111      198 Real Madrid
+##  3 8               50      0     26     128      54      74      176 Atletico d~
+##  4 7               39     16     21     128     105      23      138 Real Socie~
+##  5 10              38     15     23     120      99      21      137 Valencia   
+##  6 20              34      8     34     112      84      28      136 Villarreal 
+##  7 5               36     19     21     118     103      15      129 Sevilla    
+##  8 14              24     20     32     101     100       1      104 Eibar      
+##  9 9               24     33     19     108     127     -19       91 Celta de V~
+## 10 19              14     16     46      88      96      -8       88 Atletico d~
+## # ... with 13 more rows, and 2 more variables: pred_ranking <int>,
+## #   ranking <int>
+\end{verbatim}
+
+The predicted rankings are almost identical with the ones derived with
+the full Maher's model. There are only a few teams that shifted up or
+down by a single position -e.g.~Real Sociedad was ranked 4th by the
+model, while its actual position is 7. We can conclude that dropping
+some of the parameters did not have a significant effect on the
+predicting power of the model.
+
+\hypertarget{dixon-coles-model}{%
+\section{Dixon-Coles Model}\label{dixon-coles-model}}
+
+The Dixon-Coles model is very similar to the one described in the
+previous section. Dixon and Coles relaxed the assumption of independence
+between the scores of the two teams by introducing the following
+function:
+
+\[
+\tau_\lambda,_\mu(x,y) = \begin{cases}
+            1-\lambda\mu\rho \qquad \qquad\ \text{if } x=y=0\\
+            1+\lambda\rho     \qquad\qquad \text{if } x=0, y=1\\
+            1+\mu\rho         \quad \quad\quad\ \ \ \ \text{if } x=1, y=0\\
+            1-\rho            \qquad \quad \quad\quad\ \ \text{if } x=y=1\\
+            1                  \qquad \qquad \qquad \qquad \ \text{otherwise}
+            \end{cases}
+\] and proposed the enhanced model: \[
+P(X_i,_j = x, Y_i,_j = y) = \tau_\lambda,_\mu(x,y)\frac{\lambda e^{-\lambda}}{x!}\frac{\mu e^{-\mu}}{x!}
+\]
+
+The likelihood function of the model is given by
+
+\[
+L(\alpha_i,\beta_i,\gamma,\rho,i = 1,2,...,n) = \prod_{k=1}^{N} \tau_{\lambda_k},_{\mu_k}(x,y)e^{-\lambda_k}\lambda_k^{x_k} e^{-\mu_k}\mu_k^{x_k} 
+\] In what follows we apply the same constraint optimization algorithm
+as before but including the new parameter rho.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{local\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{local\_team\_index)}
+\NormalTok{x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index)}
+
+\NormalTok{f\_lambda }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(alfa, beta, gama)\{}
+\NormalTok{  gama}\SpecialCharTok{*}\NormalTok{alfa[x}\SpecialCharTok{$}\NormalTok{local\_team\_index]}\SpecialCharTok{*}\NormalTok{beta[x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index] }
+\NormalTok{\}}
+
+\NormalTok{f\_mu }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(alfa, beta, gama)\{}
+\NormalTok{  beta[x}\SpecialCharTok{$}\NormalTok{local\_team\_index]}\SpecialCharTok{*}\NormalTok{alfa[x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index]}
+\NormalTok{\}}
+
+\NormalTok{tau}\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{nrow}\NormalTok{(x))}
+
+\NormalTok{f\_tau }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(lambda, mu, rho)\{}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(x))\{}
+  \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i]}\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=} \DecValTok{1}\SpecialCharTok{{-}}\NormalTok{lambda[i]}\SpecialCharTok{*}\NormalTok{mu[i]}\SpecialCharTok{*}\NormalTok{rho}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i]}\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=} \DecValTok{1}\SpecialCharTok{+}\NormalTok{lambda[i]}\SpecialCharTok{*}\NormalTok{rho}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i]}\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=} \DecValTok{1}\SpecialCharTok{+}\NormalTok{mu[i]}\SpecialCharTok{*}\NormalTok{rho}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i] }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=} \DecValTok{1}\SpecialCharTok{{-}}\NormalTok{rho}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{tau[i] }\OtherTok{=} \DecValTok{1}\NormalTok{\}}
+\NormalTok{  \}}
+  \FunctionTok{return}\NormalTok{(tau)\}}
+
+
+\NormalTok{f\_l }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(w) \{}
+\NormalTok{  alfa }\OtherTok{=}\NormalTok{ w[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n] }
+\NormalTok{  beta }\OtherTok{=}\NormalTok{ w[(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n)]}
+\NormalTok{  gama }\OtherTok{=}\NormalTok{ w[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{  rho }\OtherTok{=}\NormalTok{ w[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{2}\NormalTok{]}
+\NormalTok{  lambda }\OtherTok{=} \FunctionTok{f\_lambda}\NormalTok{(alfa, beta, gama)}
+\NormalTok{  mu }\OtherTok{=} \FunctionTok{f\_mu}\NormalTok{(alfa, beta, gama)}
+\NormalTok{  tau }\OtherTok{=} \FunctionTok{f\_tau}\NormalTok{(lambda, mu, rho)}
+  
+  \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localGoals }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(lambda) }\SpecialCharTok{+}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(mu) }\SpecialCharTok{{-}}\NormalTok{ lambda }\SpecialCharTok{{-}}\NormalTok{ mu }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(tau)) }
+\NormalTok{\}}
+
+\NormalTok{eq }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(w) \{}
+\NormalTok{  alfa }\OtherTok{=}\NormalTok{ w[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]}
+  \FunctionTok{c}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\FunctionTok{sum}\NormalTok{(alfa)}\SpecialCharTok{/}\NormalTok{n))}
+\NormalTok{\}}
+
+\NormalTok{w0 }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{),}\DecValTok{0}\NormalTok{)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{warn =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\FunctionTok{suppressMessages}\NormalTok{(}
+\NormalTok{S\_DC }\OtherTok{\textless{}{-}} \FunctionTok{slsqp}\NormalTok{(w0, }\AttributeTok{fn =}\NormalTok{ f\_l,}
+           \AttributeTok{heq =}\NormalTok{ eq,}
+           \AttributeTok{control =} \FunctionTok{list}\NormalTok{(}\AttributeTok{xtol\_rel =} \FloatTok{1e{-}9}\NormalTok{, }\AttributeTok{print\_level =} \DecValTok{0}\NormalTok{)}
+\NormalTok{            )}
+\NormalTok{)}
+\NormalTok{S\_DC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $par
+##  [1]  0.704483147  0.790505888  2.030961750  0.564683719  1.135889884
+##  [6]  0.783852158  1.206020943  1.197456984  1.089092319  1.162218426
+## [11]  0.980153930  0.811296459  0.762434922  0.958931607  1.906897920
+## [16]  0.672567622  0.754872640  0.773276286  0.897415500  1.074563989
+## [21]  1.016763544  0.894087154  0.831573209  1.256731739  1.490941166
+## [26]  0.766038154  1.792488242  1.184671402  1.591855297  1.244610859
+## [31]  0.544100429  1.424827240  1.142060569  1.372876206  1.001736540
+## [36]  2.075537039  1.108217741  0.980221828  1.146371276  1.606901708
+## [41]  1.010676941  1.006425362  0.915972009  1.277750459  1.248770512
+## [46]  0.708098207  1.323236587 -0.004599772
+## 
+## $value
+## [1] 1191.435
+## 
+## $iter
+## [1] 199
+## 
+## $convergence
+## [1] 4
+## 
+## $message
+## [1] "NLOPT_XTOL_REACHED: Optimization stopped because xtol_rel or xtol_abs (above) was reached."
+\end{verbatim}
+
+Ranking the teams based on the newly calculated attack and defense
+parameters (rho and the home effect are not taken into account).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{home\_adv }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{rho\_par }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{2}\NormalTok{]}
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC}\SpecialCharTok{$}\NormalTok{par[(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n)]}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ alpha}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ beta}
+\NormalTok{game\_statistics\_mod2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(game\_statistics,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"team"}\NormalTok{))}
+\NormalTok{game\_statistics\_mod2 }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics\_mod2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{skill =}\NormalTok{ alpha}\SpecialCharTok{/}\NormalTok{beta) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(skill))}
+\FunctionTok{head}\NormalTok{(game\_statistics\_mod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 13
+##   team           W     L     D    GF    GA    GD   Pts ranking team_number alpha
+##   <chr>      <dbl> <dbl> <dbl> <int> <int> <int> <dbl>   <int> <chr>       <dbl>
+## 1 Barcelona     56     5    15   215    66   149   183       1 3           2.03 
+## 2 Atletico ~    46    11    19   128    49    79   157       3 8           1.20 
+## 3 Real Madr~    51     9    16   200    85   115   169       2 15          1.91 
+## 4 Getafe        15    13    10    42    33     9    55      18 23          0.832
+## 5 Villarreal    37    22    17   113    83    30   128       5 20          1.07 
+## 6 Valencia      35    27    14   121   103    18   119       6 10          1.16 
+## # ... with 2 more variables: beta <dbl>, skill <dbl>
+\end{verbatim}
+
+The results are very similar to what we saw in the earlier models. The
+top teams have the highest attack/defence ratio with Getafe being
+somewhat of an outlier because of its storng deffence.
+
+\hypertarget{linear-representation-of-the-dixon-coles-model}{%
+\section{Linear representation of the Dixon-Coles
+model}\label{linear-representation-of-the-dixon-coles-model}}
+
+Previously we defined the following parameters:
+
+\[
+\lambda = \alpha_i\beta_j\gamma
+\]
+
+\[
+\mu = \alpha_j\beta_i
+\]
+
+\[
+\tau_\lambda,_\mu(x,y) = \begin{cases}
+            1-\lambda\mu\rho \qquad \qquad\ \text{if } x=y=0\\
+            1+\lambda\rho     \qquad\qquad \text{if } x=0, y=1\\
+            1+\mu\rho         \quad \quad\quad\ \ \ \ \text{if } x=1, y=0\\
+            1-\rho            \qquad \quad \quad\quad\ \ \text{if } x=y=1\\
+            1                  \qquad \qquad \qquad \qquad \ \text{otherwise}
+            \end{cases}
+\] Where \(\alpha\) is an estimate of each team's attack rating,
+\(\beta_j\) is each teams defense parameter and \(\gamma\) is the ``home
+advantage''. \(\tau\) was introduced as a way to capture the correlation
+between the score of the two playing teams.
+
+We can reshape the above as follows:
+
+\[
+ln(\lambda) = \alpha_i+\beta_j+\gamma
+\]
+
+\[
+ln(\mu) = \alpha_j + \beta_i
+\]
+
+\[
+ln(\tau_\lambda,_\mu(x,y)) = \begin{cases}
+            -ln(\lambda)-ln(\mu)-ln(\rho) \qquad \qquad\ \text{if } x=y=0\\
+            ln(\lambda) + ln(\rho)     \qquad\qquad \text{if } x=0, y=1\\
+            ln(\mu) + ln(\rho)         \quad \quad\quad\ \ \ \ \text{if } x=1, y=0\\
+            -ln(\rho)            \qquad \quad \quad\quad\ \ \text{if } x=y=1\\
+            0                  \qquad \qquad \qquad \qquad \ \text{otherwise}
+            \end{cases}
+\] Where \(\lambda\), \(\beta\), \(\gamma\) are the log-values of the
+previously defined parameters.
+
+In what follows we apply the same constraint optimization algorithm as
+before to the same likelihood function but using the redefined
+parameters. The previously used constraint is now transformed into:
+
+\[
+\sum_{i=1}^n\alpha_i=0
+\] Applying the algorithm.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f\_lambda }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(alfa, beta, gama)\{}
+\NormalTok{  gama }\SpecialCharTok{+}\NormalTok{ alfa[x}\SpecialCharTok{$}\NormalTok{local\_team\_index] }\SpecialCharTok{+}\NormalTok{ beta[x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index] }
+\NormalTok{\}}
+
+\NormalTok{f\_mu }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(alfa, beta, gama)\{}
+\NormalTok{  beta[x}\SpecialCharTok{$}\NormalTok{local\_team\_index]}\SpecialCharTok{+}\NormalTok{alfa[x}\SpecialCharTok{$}\NormalTok{visitor\_team\_index]}
+\NormalTok{\}}
+
+\NormalTok{tau}\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{nrow}\NormalTok{(x))}
+
+\NormalTok{f\_tau }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(lambda, mu, rho)\{}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(x))\{}
+  \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i]}\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=} \SpecialCharTok{{-}}\NormalTok{lambda[i]}\SpecialCharTok{{-}}\NormalTok{mu[i]}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(rho)}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i]}\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=}\NormalTok{ lambda[i]}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rho)}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i]}\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=}\NormalTok{ mu[i]}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rho)}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x}\SpecialCharTok{$}\NormalTok{localGoals[i] }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&\&}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals[i] }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{      tau[i] }\OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(rho)}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{tau[i] }\OtherTok{=} \DecValTok{0}\NormalTok{\}}
+\NormalTok{  \}}
+  \FunctionTok{return}\NormalTok{(tau)\}}
+
+
+\NormalTok{f\_l }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(w) \{}
+\NormalTok{  alfa }\OtherTok{=}\NormalTok{ w[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n] }
+\NormalTok{  beta }\OtherTok{=}\NormalTok{ w[(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n)]}
+\NormalTok{  gama }\OtherTok{=}\NormalTok{ w[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{  rho }\OtherTok{=}\NormalTok{ w[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{2}\NormalTok{]}
+\NormalTok{  lambda }\OtherTok{=} \FunctionTok{f\_lambda}\NormalTok{(alfa, beta, gama)}
+\NormalTok{  mu }\OtherTok{=} \FunctionTok{f\_mu}\NormalTok{(alfa, beta, gama)}
+\NormalTok{  tau }\OtherTok{=} \FunctionTok{f\_tau}\NormalTok{(lambda, mu, rho)}
+  
+  \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{localGoals }\SpecialCharTok{*}\NormalTok{ lambda }\SpecialCharTok{+}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{visitorGoals }\SpecialCharTok{*}\NormalTok{ mu }\SpecialCharTok{{-}} \FunctionTok{exp}\NormalTok{(lambda) }\SpecialCharTok{{-}} \FunctionTok{exp}\NormalTok{(mu) }\SpecialCharTok{+}\NormalTok{ tau) }
+\NormalTok{\}}
+
+\NormalTok{eq }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(w) \{}
+\NormalTok{  alfa }\OtherTok{=}\NormalTok{ w[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]}
+  \FunctionTok{c}\NormalTok{(}\FunctionTok{sum}\NormalTok{(alfa))}
+\NormalTok{\}}
+
+\NormalTok{w0 }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{),}\DecValTok{1}\NormalTok{)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{warn =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\FunctionTok{suppressMessages}\NormalTok{(}
+\NormalTok{S\_DC2 }\OtherTok{\textless{}{-}} \FunctionTok{slsqp}\NormalTok{(w0, }\AttributeTok{fn =}\NormalTok{ f\_l,}
+           \AttributeTok{heq =}\NormalTok{ eq,}
+           \AttributeTok{control =} \FunctionTok{list}\NormalTok{(}\AttributeTok{xtol\_rel =} \FloatTok{1e{-}9}\NormalTok{, }\AttributeTok{print\_level =} \DecValTok{0}\NormalTok{, }\AttributeTok{maxeval =} \DecValTok{1000}\NormalTok{)}
+\NormalTok{            )}
+\NormalTok{)}
+\NormalTok{S\_DC2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $par
+##  [1] -1.922570e-01 -2.080045e-01  7.308706e-01 -4.742269e-01  1.254348e-01
+##  [6] -2.362058e-01  2.426301e-01  1.926136e-01  1.783600e-01  1.900390e-01
+## [11]  5.078074e-02 -1.770273e-01 -2.379759e-01  9.526389e-03  6.802136e-01
+## [16] -4.111052e-01 -1.494058e-01 -1.879286e-01 -7.810499e-02  8.559432e-02
+## [21]  8.502930e-02 -1.331500e-01 -8.570030e-02  1.735929e-01  3.207798e-01
+## [26] -2.718963e-01  5.404987e-01  1.797246e-01  4.027137e-01  2.043620e-01
+## [31] -4.405584e-01  3.470544e-01  1.189039e-01  3.092641e-01  6.940130e-04
+## [36]  6.974448e-01  8.988768e-02 -7.782557e-02  8.279044e-02  4.718327e-01
+## [41]  2.108905e-02 -3.810288e-02 -9.829237e-02  2.465020e-01  1.684583e-01
+## [46] -3.172160e-01  2.584536e-01  6.049211e+09
+## 
+## $value
+## [1] 997.7632
+## 
+## $iter
+## [1] 252
+## 
+## $convergence
+## [1] 4
+## 
+## $message
+## [1] "NLOPT_XTOL_REACHED: Optimization stopped because xtol_rel or xtol_abs (above) was reached."
+\end{verbatim}
+
+We rank teams based on their overall ability \(\alpha_i - \beta_i\) of
+attack and defense, represented on the multiplicative scale as
+\(e^{\alpha_i + \beta_i}\) .
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{home\_adv }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC2}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{rho\_par }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC2}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n}\SpecialCharTok{+}\DecValTok{2}\NormalTok{]}
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC2}\SpecialCharTok{$}\NormalTok{par[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ S\_DC2}\SpecialCharTok{$}\NormalTok{par[(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{n)]}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{attack }\OtherTok{\textless{}{-}}\NormalTok{ alpha}
+\NormalTok{teams}\SpecialCharTok{$}\NormalTok{defence }\OtherTok{\textless{}{-}}\NormalTok{ beta}
+\CommentTok{\#teams \textless{}{-} select(teams,{-}alpha,{-}beta)}
+\NormalTok{game\_statistics\_mod3 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(game\_statistics,teams, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"team"}\NormalTok{))}
+\NormalTok{game\_statistics\_mod3 }\OtherTok{\textless{}{-}}\NormalTok{ game\_statistics\_mod3 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{skill =} \FunctionTok{exp}\NormalTok{(attack}\SpecialCharTok{{-}}\NormalTok{defence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(skill))}
+\FunctionTok{head}\NormalTok{(game\_statistics\_mod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 15
+##   team           W     L     D    GF    GA    GD   Pts ranking team_number alpha
+##   <chr>      <dbl> <dbl> <dbl> <int> <int> <int> <dbl>   <int> <chr>       <dbl>
+## 1 Barcelona     56     5    15   215    66   149   183       1 3           2.03 
+## 2 Real Madr~    51     9    16   200    85   115   169       2 15          1.91 
+## 3 Atletico ~    46    11    19   128    49    79   157       3 8           1.20 
+## 4 Getafe        15    13    10    42    33     9    55      18 23          0.832
+## 5 Villarreal    37    22    17   113    83    30   128       5 20          1.07 
+## 6 Valencia      35    27    14   121   103    18   119       6 10          1.16 
+## # ... with 4 more variables: beta <dbl>, attack <dbl>, defence <dbl>,
+## #   skill <dbl>
+\end{verbatim}
+
+As expected we get exactly the same results as before, since this is the
+same model just represented differently.
+
+\end{document}
