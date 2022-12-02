@@ -1,0 +1,180 @@
+---
+title: "Spanish League Football"
+format: html
+editor: visual
+code-fold: true
+---
+
+## Data Overview
+
+We load football data from a Kaggle containing 1st division Spanish League results (<https://www.kaggle.com/datasets/ricardomoya/football-matches-of-spanish-league>), for the 2016-17 and 2017-18 seasons.
+
+```{r message=FALSE, warning=FALSE}
+library("dplyr")
+library("tidyr")
+library("ggplot2")
+library("reshape2")
+library("nloptr")
+library("data.table")
+library(DT)
+library(kableExtra)
+
+data <- fread("https://raw.githubusercontent.com/plamenapp/MastersThesis/master/FMEL_Dataset.csv")
+ 
+
+data <- data %>%
+  filter(season == "2016-17" | season == "2017-18" ) %>%
+  filter(division == 1) 
+#datatable(data |> head())
+
+kable(data |> head(6)) %>%
+  kable_styling("striped", full_width = F) %>%
+  scroll_box(width = "100%", height = "200px")
+```
+
+### Creating a compact data table
+
+```{r}
+x = data[, c("season", "round", "localTeam", "visitorTeam", "localGoals", "visitorGoals")]
+names(x) = c("season", "round", "home", "away", "hscore", "ascore")
+x$season = as.factor(x$season)
+x |> head()
+```
+
+### Adding game statistics
+
+::: panel-tabset
+## Empty table
+
+```{r}
+teams = sort(unique(c(x$`home`, x$`away`)))
+n = length(teams)
+ranking = data.table(Team = teams, #attack = rep(0, n), defence = rep(0,n), total = rep(0,n),
+                     W = rep(0,n), L = rep(0,n), D = rep(0,n), 
+                     GF = rep(0,n), GA = rep(0,n), GD = rep(0,n), Pts = rep(0,n))
+ranking %>% head
+```
+
+## Wins
+
+```{r}
+f = function(hscore, ascore) { score = ifelse(hscore > ascore, 1, 0); sum(score);}
+wins = x[, .( wins = f(hscore, ascore)), by = `home`]
+wins = wins[order(`home`), ]
+wins2 = x[, .( wins = f(ascore, hscore)), by = `away`]
+wins2 = wins2[order(`away`), ]
+
+ranking$W = wins$wins + wins2$wins
+ranking %>% head
+```
+
+## Losses
+
+```{r}
+losses = x[, .( loss = f(ascore, hscore)), by = `home`]
+losses = losses[order(`home`), ]
+losses2 = x[, .( loss = f(hscore, ascore)), by = `away`]
+losses2 = losses2[order(`away`), ]
+
+ranking$L = losses$loss + losses2$loss
+ranking %>% head
+```
+
+## Draws
+
+```{r}
+g = function(hscore, ascore) { score = ifelse(hscore == ascore, 1, 0); sum(score);}
+draws = x[, .( draws = g(hscore, ascore)), by = `home`]
+draws = draws[order(`home`), ]
+draws2 = x[, .( draws = g(hscore, ascore)), by = `away`]
+draws2 = draws2[order(`away`), ]
+ranking$D = draws$draws + draws2$draws
+ranking %>% head
+```
+
+## Goals
+
+```{r}
+gf = x[, .(GF = sum(hscore)), by = `home`]
+gf = gf[order(gf$`home`), ]
+ga = x[, .(GA = sum(ascore)), by = `home`]
+ga = ga[order(ga$`home`), ]
+
+gf2 = x[, .(GF = sum(ascore)), by = `away`]
+gf2 = gf2[order(gf2$`away`), ]
+ga2 = x[, .(GA = sum(hscore)), by = `away`]
+ga2 = ga2[order(ga2$`away`), ]
+
+
+ranking$GF = gf$GF + gf2$GF
+ranking$GA = ga$GA + ga2$GA
+ranking[, GD := GF - GA]
+
+ranking %>% head
+```
+
+## Points
+
+```{r}
+ranking[, Pts := 3*W + D]
+ranking %>% head
+```
+:::
+
+
+### Ranking teams according to points
+
+```{r}
+ranking[order(ranking$Pts, decreasing = T),]
+```
+
+### Histograms
+
+::: panel-tabset
+
+## Home Goals
+
+```{r}
+g1 = ggplot(data = x, aes(hscore, color = "Empirical")) + 
+  geom_bar(fill = "lightgreen") + labs(x = "home goals") +
+  scale_y_continuous(limits = c(0,300))
+
+fit1 = MASS::fitdistr(x$hscore, "poisson")
+hscore_fit = (dpois(0:7, fit1$estimate) * nrow(x)) |> round()
+
+g1 + geom_point(data = data.frame(goals = 0:7, count = hscore_fit), aes(goals, count, color = "Poisson")) +
+  scale_color_manual(name='Frequency',
+                     breaks=c('Empirical', 'Poisson'),
+                     values=c('Empirical' = 'lightgreen', 'Poisson' = 'black'))
+```
+
+## Away Goals
+
+```{r}
+g2 = ggplot(data = x, aes(ascore, color = "Empirical")) + 
+  geom_bar(fill = "lightgreen") + labs(x = "away goals") +
+  scale_y_continuous(limits = c(0,300))
+
+fit2 = MASS::fitdistr(x$ascore, "poisson")
+ascore_fit = (dpois(0:7, fit2$estimate) * nrow(x)) |> round()
+
+g2 + geom_point(data = data.frame(goals = 0:7, count = ascore_fit), aes(goals, count, color = "Poisson")) +
+  scale_color_manual(name='Frequency',
+                     breaks=c('Empirical', 'Poisson'),
+                     values=c('Empirical'='lightgreen', 'Poisson'='black'))
+```
+
+:::
+
+
+::: {#exr-neg_bin}
+Repeat the above analysis with the Negative Binomial distribution instead of Poisson. 
+:::
+
+
+
+
+
+
+
+

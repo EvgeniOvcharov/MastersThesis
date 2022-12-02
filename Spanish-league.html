@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.573">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Spanish League Football</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Spanish-league_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Spanish-league_files/libs/quarto-html/quarto.js"></script>
+<script src="Spanish-league_files/libs/quarto-html/popper.min.js"></script>
+<script src="Spanish-league_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Spanish-league_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Spanish-league_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Spanish-league_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Spanish-league_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Spanish-league_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Spanish-league_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+<script src="Spanish-league_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Spanish-league_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Spanish League Football</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="data-overview" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview">Data Overview</h2>
+<p>We load football data from a Kaggle containing 1st division Spanish League results (<a href="https://www.kaggle.com/datasets/ricardomoya/football-matches-of-spanish-league" class="uri">https://www.kaggle.com/datasets/ricardomoya/football-matches-of-spanish-league</a>), for the 2016-17 and 2017-18 seasons.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyr"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"reshape2"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"nloptr"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"data.table"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"https://raw.githubusercontent.com/plamenapp/MastersThesis/master/FMEL_Dataset.csv"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(season <span class="sc">==</span> <span class="st">"2016-17"</span> <span class="sc">|</span> season <span class="sc">==</span> <span class="st">"2017-18"</span> ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(division <span class="sc">==</span> <span class="dv">1</span>) </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#datatable(data |&gt; head())</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(data <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">6</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">height =</span> <span class="st">"200px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; overflow-x: scroll; width:100%; "><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> id </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> season </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> division </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> round </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> localTeam </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> visitorTeam </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> localGoals </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> visitorGoals </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> date </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> timestamp </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 35464 </td>
+   <td style="text-align:left;"> 2016-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Malaga </td>
+   <td style="text-align:left;"> Osasuna </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 19/08/2016 </td>
+   <td style="text-align:right;"> 1471557600 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 35465 </td>
+   <td style="text-align:left;"> 2016-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Deportivo </td>
+   <td style="text-align:left;"> Eibar </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 19/08/2016 </td>
+   <td style="text-align:right;"> 1471557600 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 35466 </td>
+   <td style="text-align:left;"> 2016-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Barcelona </td>
+   <td style="text-align:left;"> Betis </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 20/08/2016 </td>
+   <td style="text-align:right;"> 1471644000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 35467 </td>
+   <td style="text-align:left;"> 2016-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Granada </td>
+   <td style="text-align:left;"> Villarreal </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 20/08/2016 </td>
+   <td style="text-align:right;"> 1471644000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 35468 </td>
+   <td style="text-align:left;"> 2016-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Sevilla </td>
+   <td style="text-align:left;"> Espanol </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> 20/08/2016 </td>
+   <td style="text-align:right;"> 1471644000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 35469 </td>
+   <td style="text-align:left;"> 2016-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Sporting de Gijon </td>
+   <td style="text-align:left;"> Atletico de Bilbao </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 21/08/2016 </td>
+   <td style="text-align:right;"> 1471730400 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+<section id="creating-a-compact-data-table" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-compact-data-table">Creating a compact data table</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> data[, <span class="fu">c</span>(<span class="st">"season"</span>, <span class="st">"round"</span>, <span class="st">"localTeam"</span>, <span class="st">"visitorTeam"</span>, <span class="st">"localGoals"</span>, <span class="st">"visitorGoals"</span>)]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(x) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"season"</span>, <span class="st">"round"</span>, <span class="st">"home"</span>, <span class="st">"away"</span>, <span class="st">"hscore"</span>, <span class="st">"ascore"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span>season <span class="ot">=</span> <span class="fu">as.factor</span>(x<span class="sc">$</span>season)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    season round              home               away hscore ascore
+1: 2016-17     1            Malaga            Osasuna      1      1
+2: 2016-17     1         Deportivo              Eibar      2      1
+3: 2016-17     1         Barcelona              Betis      6      2
+4: 2016-17     1           Granada         Villarreal      1      1
+5: 2016-17     1           Sevilla            Espanol      6      4
+6: 2016-17     1 Sporting de Gijon Atletico de Bilbao      2      1</code></pre>
+</div>
+</div>
+</section>
+<section id="adding-game-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="adding-game-statistics">Adding game statistics</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Empty table</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Wins</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Losses</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Draws</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">Goals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false">Points</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>teams <span class="ot">=</span> <span class="fu">sort</span>(<span class="fu">unique</span>(<span class="fu">c</span>(x<span class="sc">$</span><span class="st">`</span><span class="at">home</span><span class="st">`</span>, x<span class="sc">$</span><span class="st">`</span><span class="at">away</span><span class="st">`</span>)))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">length</span>(teams)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ranking <span class="ot">=</span> <span class="fu">data.table</span>(<span class="at">Team =</span> teams, <span class="co">#attack = rep(0, n), defence = rep(0,n), total = rep(0,n),</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">W =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n), <span class="at">L =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n), <span class="at">D =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n), </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">GF =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n), <span class="at">GA =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n), <span class="at">GD =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n), <span class="at">Pts =</span> <span class="fu">rep</span>(<span class="dv">0</span>,n))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ranking <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Team W L D GF GA GD Pts
+1:             Alaves 0 0 0  0  0  0   0
+2: Atletico de Bilbao 0 0 0  0  0  0   0
+3: Atletico de Madrid 0 0 0  0  0  0   0
+4:          Barcelona 0 0 0  0  0  0   0
+5:              Betis 0 0 0  0  0  0   0
+6:      Celta de Vigo 0 0 0  0  0  0   0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="cf">function</span>(hscore, ascore) { score <span class="ot">=</span> <span class="fu">ifelse</span>(hscore <span class="sc">&gt;</span> ascore, <span class="dv">1</span>, <span class="dv">0</span>); <span class="fu">sum</span>(score);}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>wins <span class="ot">=</span> x[, .( <span class="at">wins =</span> <span class="fu">f</span>(hscore, ascore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">home</span><span class="st">`</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>wins <span class="ot">=</span> wins[<span class="fu">order</span>(<span class="st">`</span><span class="at">home</span><span class="st">`</span>), ]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>wins2 <span class="ot">=</span> x[, .( <span class="at">wins =</span> <span class="fu">f</span>(ascore, hscore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">away</span><span class="st">`</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>wins2 <span class="ot">=</span> wins2[<span class="fu">order</span>(<span class="st">`</span><span class="at">away</span><span class="st">`</span>), ]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ranking<span class="sc">$</span>W <span class="ot">=</span> wins<span class="sc">$</span>wins <span class="sc">+</span> wins2<span class="sc">$</span>wins</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ranking <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Team  W L D GF GA GD Pts
+1:             Alaves 29 0 0  0  0  0   0
+2: Atletico de Bilbao 29 0 0  0  0  0   0
+3: Atletico de Madrid 46 0 0  0  0  0   0
+4:          Barcelona 56 0 0  0  0  0   0
+5:              Betis 28 0 0  0  0  0   0
+6:      Celta de Vigo 26 0 0  0  0  0   0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>losses <span class="ot">=</span> x[, .( <span class="at">loss =</span> <span class="fu">f</span>(ascore, hscore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">home</span><span class="st">`</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>losses <span class="ot">=</span> losses[<span class="fu">order</span>(<span class="st">`</span><span class="at">home</span><span class="st">`</span>), ]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>losses2 <span class="ot">=</span> x[, .( <span class="at">loss =</span> <span class="fu">f</span>(hscore, ascore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">away</span><span class="st">`</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>losses2 <span class="ot">=</span> losses2[<span class="fu">order</span>(<span class="st">`</span><span class="at">away</span><span class="st">`</span>), ]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ranking<span class="sc">$</span>L <span class="ot">=</span> losses<span class="sc">$</span>loss <span class="sc">+</span> losses2<span class="sc">$</span>loss</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ranking <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Team  W  L D GF GA GD Pts
+1:             Alaves 29 32 0  0  0  0   0
+2: Atletico de Bilbao 29 28 0  0  0  0   0
+3: Atletico de Madrid 46 11 0  0  0  0   0
+4:          Barcelona 56  5 0  0  0  0   0
+5:              Betis 28 33 0  0  0  0   0
+6:      Celta de Vigo 26 34 0  0  0  0   0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">=</span> <span class="cf">function</span>(hscore, ascore) { score <span class="ot">=</span> <span class="fu">ifelse</span>(hscore <span class="sc">==</span> ascore, <span class="dv">1</span>, <span class="dv">0</span>); <span class="fu">sum</span>(score);}</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">=</span> x[, .( <span class="at">draws =</span> <span class="fu">g</span>(hscore, ascore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">home</span><span class="st">`</span>]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">=</span> draws[<span class="fu">order</span>(<span class="st">`</span><span class="at">home</span><span class="st">`</span>), ]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>draws2 <span class="ot">=</span> x[, .( <span class="at">draws =</span> <span class="fu">g</span>(hscore, ascore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">away</span><span class="st">`</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>draws2 <span class="ot">=</span> draws2[<span class="fu">order</span>(<span class="st">`</span><span class="at">away</span><span class="st">`</span>), ]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>ranking<span class="sc">$</span>D <span class="ot">=</span> draws<span class="sc">$</span>draws <span class="sc">+</span> draws2<span class="sc">$</span>draws</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>ranking <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Team  W  L  D GF GA GD Pts
+1:             Alaves 29 32 15  0  0  0   0
+2: Atletico de Bilbao 29 28 19  0  0  0   0
+3: Atletico de Madrid 46 11 19  0  0  0   0
+4:          Barcelona 56  5 15  0  0  0   0
+5:              Betis 28 33 15  0  0  0   0
+6:      Celta de Vigo 26 34 16  0  0  0   0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gf <span class="ot">=</span> x[, .(<span class="at">GF =</span> <span class="fu">sum</span>(hscore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">home</span><span class="st">`</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>gf <span class="ot">=</span> gf[<span class="fu">order</span>(gf<span class="sc">$</span><span class="st">`</span><span class="at">home</span><span class="st">`</span>), ]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ga <span class="ot">=</span> x[, .(<span class="at">GA =</span> <span class="fu">sum</span>(ascore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">home</span><span class="st">`</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ga <span class="ot">=</span> ga[<span class="fu">order</span>(ga<span class="sc">$</span><span class="st">`</span><span class="at">home</span><span class="st">`</span>), ]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>gf2 <span class="ot">=</span> x[, .(<span class="at">GF =</span> <span class="fu">sum</span>(ascore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">away</span><span class="st">`</span>]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>gf2 <span class="ot">=</span> gf2[<span class="fu">order</span>(gf2<span class="sc">$</span><span class="st">`</span><span class="at">away</span><span class="st">`</span>), ]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ga2 <span class="ot">=</span> x[, .(<span class="at">GA =</span> <span class="fu">sum</span>(hscore)), by <span class="ot">=</span> <span class="st">`</span><span class="at">away</span><span class="st">`</span>]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>ga2 <span class="ot">=</span> ga2[<span class="fu">order</span>(ga2<span class="sc">$</span><span class="st">`</span><span class="at">away</span><span class="st">`</span>), ]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>ranking<span class="sc">$</span>GF <span class="ot">=</span> gf<span class="sc">$</span>GF <span class="sc">+</span> gf2<span class="sc">$</span>GF</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>ranking<span class="sc">$</span>GA <span class="ot">=</span> ga<span class="sc">$</span>GA <span class="sc">+</span> ga2<span class="sc">$</span>GA</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>ranking[, GD <span class="sc">:</span><span class="er">=</span> GF <span class="sc">-</span> GA]</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>ranking <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Team  W  L  D  GF  GA  GD Pts
+1:             Alaves 29 32 15  81  93 -12   0
+2: Atletico de Bilbao 29 28 19  94  92   2   0
+3: Atletico de Madrid 46 11 19 128  49  79   0
+4:          Barcelona 56  5 15 215  66 149   0
+5:              Betis 28 33 15 101 125 -24   0
+6:      Celta de Vigo 26 34 16 112 129 -17   0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ranking[, Pts <span class="sc">:</span><span class="er">=</span> <span class="dv">3</span><span class="sc">*</span>W <span class="sc">+</span> D]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ranking <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Team  W  L  D  GF  GA  GD Pts
+1:             Alaves 29 32 15  81  93 -12 102
+2: Atletico de Bilbao 29 28 19  94  92   2 106
+3: Atletico de Madrid 46 11 19 128  49  79 157
+4:          Barcelona 56  5 15 215  66 149 183
+5:              Betis 28 33 15 101 125 -24  99
+6:      Celta de Vigo 26 34 16 112 129 -17  94</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ranking-teams-according-to-points" class="level3">
+<h3 class="anchored" data-anchor-id="ranking-teams-according-to-points">Ranking teams according to points</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ranking[<span class="fu">order</span>(ranking<span class="sc">$</span>Pts, <span class="at">decreasing =</span> T),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Team  W  L  D  GF  GA  GD Pts
+ 1:          Barcelona 56  5 15 215  66 149 183
+ 2:        Real Madrid 51  9 16 200  85 115 169
+ 3: Atletico de Madrid 46 11 19 128  49  79 157
+ 4:            Sevilla 38 22 16 118 107  11 130
+ 5:         Villarreal 37 22 17 113  83  30 128
+ 6:           Valencia 35 27 14 121 103  18 119
+ 7:      Real Sociedad 33 29 14 125 112  13 113
+ 8: Atletico de Bilbao 29 28 19  94  92   2 106
+ 9:              Eibar 29 29 18 100 101  -1 105
+10:            Espanol 27 25 24  85  92  -7 105
+11:             Alaves 29 32 15  81  93 -12 102
+12:              Betis 28 33 15 101 125 -24  99
+13:      Celta de Vigo 26 34 16 112 129 -17  94
+14:            Leganes 20 38 18  70 106 -36  78
+15:             Malaga 17 44 15  73 116 -43  66
+16:          Deportivo 14 39 23  81 137 -56  65
+17:         Las Palmas 15 45 16  77 148 -71  61
+18:             Getafe 15 13 10  42  33   9  55
+19:             Girona 14 15  9  50  59  -9  51
+20:            Levante 11 14 13  44  58 -14  46
+21:  Sporting de Gijon  7 21 10  42  72 -30  31
+22:            Osasuna  4 24 10  40  94 -54  22
+23:            Granada  4 26  8  30  82 -52  20
+                  Team  W  L  D  GF  GA  GD Pts</code></pre>
+</div>
+</div>
+</section>
+<section id="histograms" class="level3">
+<h3 class="anchored" data-anchor-id="histograms">Histograms</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Home Goals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Away Goals</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(hscore, <span class="at">color =</span> <span class="st">"Empirical"</span>)) <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"home goals"</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">300</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> MASS<span class="sc">::</span><span class="fu">fitdistr</span>(x<span class="sc">$</span>hscore, <span class="st">"poisson"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>hscore_fit <span class="ot">=</span> (<span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, fit1<span class="sc">$</span>estimate) <span class="sc">*</span> <span class="fu">nrow</span>(x)) <span class="sc">|&gt;</span> <span class="fu">round</span>()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> hscore_fit), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Poisson"</span>)) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical'</span>, <span class="st">'Poisson'</span>),</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical'</span> <span class="ot">=</span> <span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span> <span class="ot">=</span> <span class="st">'black'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Spanish-league_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(ascore, <span class="at">color =</span> <span class="st">"Empirical"</span>)) <span class="sc">+</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"away goals"</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">300</span>))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> MASS<span class="sc">::</span><span class="fu">fitdistr</span>(x<span class="sc">$</span>ascore, <span class="st">"poisson"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ascore_fit <span class="ot">=</span> (<span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, fit2<span class="sc">$</span>estimate) <span class="sc">*</span> <span class="fu">nrow</span>(x)) <span class="sc">|&gt;</span> <span class="fu">round</span>()</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> ascore_fit), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Poisson"</span>)) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical'</span>, <span class="st">'Poisson'</span>),</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical'</span><span class="ot">=</span><span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span><span class="ot">=</span><span class="st">'black'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Spanish-league_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="exr-neg_bin" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1 </strong></span></p>
+<p>Repeat the above analysis with the Negative Binomial distribution instead of Poisson.</p>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
