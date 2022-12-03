@@ -451,24 +451,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="histograms" class="level3">
 <h3 class="anchored" data-anchor-id="histograms">Histograms</h3>
+<p>Here we display the frequencies of the number of home and away goals for all football matches. This information can be used to model the probability distribution of the goals scored by the average team in the tournament. We fit a Poisson and a Negative Binomial distribution to the empirical frequencies. We observe that the Negative Binomial distribution provides a better fit, but that is hardly surprising as Poisson is a one-parameter family, while the Negative Binomial is a two-parameter family of distributions.</p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Home Goals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Away Goals</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Home Goals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Away Goals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Home Goals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Away Goals</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(hscore, <span class="at">color =</span> <span class="st">"Empirical"</span>)) <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(hscore, <span class="at">color =</span> <span class="st">"Empirical  "</span>)) <span class="sc">+</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"home goals"</span>) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">300</span>))</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> MASS<span class="sc">::</span><span class="fu">fitdistr</span>(x<span class="sc">$</span>hscore, <span class="st">"poisson"</span>)</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>hscore_fit <span class="ot">=</span> (<span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, fit1<span class="sc">$</span>estimate) <span class="sc">*</span> <span class="fu">nrow</span>(x)) <span class="sc">|&gt;</span> <span class="fu">round</span>()</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> hscore_fit), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Poisson"</span>)) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical'</span>, <span class="st">'Poisson'</span>),</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical'</span> <span class="ot">=</span> <span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span> <span class="ot">=</span> <span class="st">'black'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span> g1 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> hscore_fit), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Poisson"</span>)) </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span>, <span class="st">'Poisson'</span>),</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span> <span class="ot">=</span> <span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span> <span class="ot">=</span> <span class="st">'black'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Spanish-league_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
@@ -479,20 +482,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(ascore, <span class="at">color =</span> <span class="st">"Empirical"</span>)) <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(ascore, <span class="at">color =</span> <span class="st">"Empirical  "</span>)) <span class="sc">+</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"away goals"</span>) <span class="sc">+</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">300</span>))</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> MASS<span class="sc">::</span><span class="fu">fitdistr</span>(x<span class="sc">$</span>ascore, <span class="st">"poisson"</span>)</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ascore_fit <span class="ot">=</span> (<span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, fit2<span class="sc">$</span>estimate) <span class="sc">*</span> <span class="fu">nrow</span>(x)) <span class="sc">|&gt;</span> <span class="fu">round</span>()</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> ascore_fit), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Poisson"</span>)) <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical'</span>, <span class="st">'Poisson'</span>),</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical'</span><span class="ot">=</span><span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span><span class="ot">=</span><span class="st">'black'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span> g2 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> ascore_fit), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Poisson"</span>)) </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span>, <span class="st">'Poisson'</span>),</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span><span class="ot">=</span><span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span><span class="ot">=</span><span class="st">'black'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Spanish-league_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">=</span> MASS<span class="sc">::</span><span class="fu">fitdistr</span>(x<span class="sc">$</span>hscore, <span class="st">"negative binomial"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>hscore_fit3 <span class="ot">=</span> (<span class="fu">dnbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">size =</span> fit3<span class="sc">$</span>estimate[<span class="st">'size'</span>], <span class="at">mu =</span> fit3<span class="sc">$</span>estimate[<span class="st">'mu'</span>]) <span class="sc">*</span> <span class="fu">nrow</span>(x)) <span class="sc">|&gt;</span> <span class="fu">round</span>()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> hscore_fit3), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Neg Binom"</span>)) <span class="sc">+</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span>,  <span class="st">'Poisson'</span>, <span class="st">"Neg Binom"</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span> <span class="ot">=</span> <span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span> <span class="ot">=</span> <span class="st">'black'</span>, <span class="st">"Neg Binom"</span> <span class="ot">=</span> <span class="st">'red'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Spanish-league_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">=</span> MASS<span class="sc">::</span><span class="fu">fitdistr</span>(x<span class="sc">$</span>ascore, <span class="st">"negative binomial"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ascore_fit4 <span class="ot">=</span> (<span class="fu">dnbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">size =</span> fit4<span class="sc">$</span>estimate[<span class="st">'size'</span>], <span class="at">mu =</span> fit4<span class="sc">$</span>estimate[<span class="st">'mu'</span>]) <span class="sc">*</span> <span class="fu">nrow</span>(x)) <span class="sc">|&gt;</span> <span class="fu">round</span>()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">goals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">count =</span> ascore_fit4), <span class="fu">aes</span>(goals, count, <span class="at">color =</span> <span class="st">"Neg Binom"</span>)) <span class="sc">+</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">'Frequency'</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span>, <span class="st">'Poisson'</span>, <span class="st">"Neg Binom"</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Empirical  '</span> <span class="ot">=</span> <span class="st">'lightgreen'</span>, <span class="st">'Poisson'</span> <span class="ot">=</span> <span class="st">'black'</span>, <span class="st">"Neg Binom"</span> <span class="ot">=</span> <span class="st">'red'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Spanish-league_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -500,7 +538,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="exr-neg_bin" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 1 </strong></span></p>
-<p>Repeat the above analysis with the Negative Binomial distribution instead of Poisson.</p>
+<p>Repeat the above analysis with the Weibull distribution as well.</p>
 </div>
 </section>
 </section>

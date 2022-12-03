@@ -121,7 +121,6 @@ ranking %>% head
 ```
 :::
 
-
 ### Ranking teams according to points
 
 ```{r}
@@ -130,51 +129,71 @@ ranking[order(ranking$Pts, decreasing = T),]
 
 ### Histograms
 
-::: panel-tabset
+Here we display the frequencies of the number of home and away goals for all football matches. This information can be used to model the probability distribution of the goals scored by the average team in the tournament. We fit a Poisson and a Negative Binomial distribution to the empirical frequencies. We observe that the Negative Binomial distribution provides a better fit, but that is hardly surprising as Poisson is a one-parameter family, while the Negative Binomial is a two-parameter family of distributions.
 
+::: panel-tabset
 ## Home Goals
 
 ```{r}
-g1 = ggplot(data = x, aes(hscore, color = "Empirical")) + 
+g1 = ggplot(data = x, aes(hscore, color = "Empirical  ")) + 
   geom_bar(fill = "lightgreen") + labs(x = "home goals") +
   scale_y_continuous(limits = c(0,300))
 
 fit1 = MASS::fitdistr(x$hscore, "poisson")
 hscore_fit = (dpois(0:7, fit1$estimate) * nrow(x)) |> round()
 
-g1 + geom_point(data = data.frame(goals = 0:7, count = hscore_fit), aes(goals, count, color = "Poisson")) +
-  scale_color_manual(name='Frequency',
-                     breaks=c('Empirical', 'Poisson'),
-                     values=c('Empirical' = 'lightgreen', 'Poisson' = 'black'))
+
+g1 = g1 + geom_point(data = data.frame(goals = 0:7, count = hscore_fit), aes(goals, count, color = "Poisson")) 
+
+g1 + scale_color_manual(name='Frequency',
+              breaks=c('Empirical  ', 'Poisson'),
+              values=c('Empirical  ' = 'lightgreen', 'Poisson' = 'black'))
 ```
 
 ## Away Goals
 
 ```{r}
-g2 = ggplot(data = x, aes(ascore, color = "Empirical")) + 
+g2 = ggplot(data = x, aes(ascore, color = "Empirical  ")) + 
   geom_bar(fill = "lightgreen") + labs(x = "away goals") +
   scale_y_continuous(limits = c(0,300))
 
 fit2 = MASS::fitdistr(x$ascore, "poisson")
 ascore_fit = (dpois(0:7, fit2$estimate) * nrow(x)) |> round()
 
-g2 + geom_point(data = data.frame(goals = 0:7, count = ascore_fit), aes(goals, count, color = "Poisson")) +
+g2 = g2 + geom_point(data = data.frame(goals = 0:7, count = ascore_fit), aes(goals, count, color = "Poisson")) 
+
+g2 + scale_color_manual(name='Frequency',
+                     breaks=c('Empirical  ', 'Poisson'),
+                     values=c('Empirical  '='lightgreen', 'Poisson'='black'))
+```
+
+## Home Goals
+
+```{r}
+fit3 = MASS::fitdistr(x$hscore, "negative binomial")
+hscore_fit3 = (dnbinom(0:7, size = fit3$estimate['size'], mu = fit3$estimate['mu']) * nrow(x)) |> round()
+
+g1 + geom_point(data = data.frame(goals = 0:7, count = hscore_fit3), aes(goals, count, color = "Neg Binom")) + 
   scale_color_manual(name='Frequency',
-                     breaks=c('Empirical', 'Poisson'),
-                     values=c('Empirical'='lightgreen', 'Poisson'='black'))
+              breaks=c('Empirical  ',  'Poisson', "Neg Binom"),
+              values=c('Empirical  ' = 'lightgreen', 'Poisson' = 'black', "Neg Binom" = 'red'))
+```
+## Away Goals
+
+```{r}
+fit4 = MASS::fitdistr(x$ascore, "negative binomial")
+ascore_fit4 = (dnbinom(0:7, size = fit4$estimate['size'], mu = fit4$estimate['mu']) * nrow(x)) |> round()
+
+g2 + geom_point(data = data.frame(goals = 0:7, count = ascore_fit4), aes(goals, count, color = "Neg Binom")) + 
+  scale_color_manual(name='Frequency',
+              breaks=c('Empirical  ', 'Poisson', "Neg Binom"),
+              values=c('Empirical  ' = 'lightgreen', 'Poisson' = 'black', "Neg Binom" = 'red'))
 ```
 
 :::
 
-
 ::: {#exr-neg_bin}
-Repeat the above analysis with the Negative Binomial distribution instead of Poisson. 
+Repeat the above analysis with the Weibull distribution as well.
 :::
-
-
-
-
-
-
 
 
